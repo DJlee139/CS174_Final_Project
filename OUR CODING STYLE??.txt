@@ -1,0 +1,31 @@
+Header files:
+	Each class should have its own
+	#Should all have include guards
+	Shouldn't use any namespaces
+	class ImAClass {
+		public:
+			//no member variables are EVER public
+			//they all have getter and setter functions
+			Eigen::Vector3f imAFunction();
+			//Getter and setter functions can be defined .h file
+			//All others should be in ImAClass.cpp
+			void setSomething(const double s) { m_s = s; }
+			//Everything possible should be const here, esp since otherwise you can't
+			//pass some stuff by reference
+		protected:
+			m_im_a_member_variable_that_derived_classes_need_to_access;
+		private:
+			m_im_a_member_variable;
+			static s_im_a_static_variable
+			
+.cpp files:
+	p_im_a_pointer;
+	g_im_a_global_variable;
+	gp_im_a_global_pointer;
+	const IM_A_CONSTANT;
+	const S_IM_A_STATIC_CONSTANT;
+	//You get the idea...
+	
+	Should #include everything it needs, even if the .h file includes it already
+	Should always use namespace Eigen;
+	
