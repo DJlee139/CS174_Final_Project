@@ -30,9 +30,7 @@ void main()
 {
     gl_Position = proj*cMw*wMo*vPosition;
     
-    float flipFactor = 1.0;
-    if ( flipNormals )
-    	flipFactor = -1.0;
+    float flipFactor = flipNormals ? -1.0 : 1.0;
     fN = (wMo*vec4(vNormal.x,vNormal.y,vNormal.z,0.0)).xyz * flipFactor;
     fV = (cameraPosition - wMo*vPosition).xyz;
     fL = (lightPosition - wMo*vPosition).xyz;

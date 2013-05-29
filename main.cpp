@@ -12,6 +12,7 @@
 #include "Thing.h"
 #include "Sphere.h"
 #include "Wall.h"
+#include "World.h"
 using namespace Eigen;
 
 // Constants ---------------------------------------------------------------------------------------
@@ -35,7 +36,6 @@ Light g_lumia;
 Timer g_timer ;
 Mesh* gp_cube_mesh, *gp_sphere_mesh, *gp_wall_mesh;
 
-
 void initGeometry() {
 	/*I just call functions that assign vertices and normals to all the global
 	Mesh objects. Pointers to these guys are used to provide all the geometry
@@ -47,8 +47,11 @@ void initGeometry() {
 
 void initScene(){
     g_pentax.init(60, g_window_width/g_window_height , 0.1, 400);
+    g_pentax.setZoom(g_pentax.getZoom() * 0.25);
+    g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     
     g_lumia.setColor(Vector4f(1,1,1,1));
+    g_lumia.setPosition(Vector4f(0,0,14,1)); //Let's try to keep the light at the camera ?
    
     //Set up the global drawer. BUT FIRST! We have to link the shaderz because otherwise
     //none of the InitDraws will work.
@@ -58,32 +61,33 @@ void initScene(){
 	DTIME = 0.0;
 	FRAME_TIME = 0.0;
 
-    //change initial camera position
-    g_pentax.setZoom(g_pentax.getZoom() * 0.25);
-    g_rotation = 0;  
 	
 	initGeometry();
 	
 	Thing* im_a_sphere = new MySphere();
 	im_a_sphere->setColor(Vector4f(0,1,0,1));
+	im_a_sphere->translate(Vector3f(-7,0,0));
 	im_a_sphere->scale(3.5);
-	im_a_sphere->translate(Vector3f(2,0,0));
 	g_timmy.addThing(im_a_sphere);
 
-	Thing* left_wall = new Wall();
+	Thing* left_wall = new Wall(); //All the walls start out perpendicular to the Z axis
 	Thing* right_wall = new Wall();
 	Thing* bottom_wall = new Wall();
 	Thing* back_wall = new Wall();
 	Thing* top_wall = new Wall();
-	
-	left_wall->scale(40);
+/*	
+	left_wall->scale(20);
 	right_wall->scale(40);
 	left_wall->rotateY(90);
-	left_wall->translate(Vector3f(-2.5,0,0));
-	right_wall->translate(Vector3f(2.5,0,0));
-	
+	left_wall->translate(Vector3f(-2.5,0,-10));
+	right_wall->translate(Vector3f(2.5,0,-10));
+*/
+	back_wall->translate(Vector3f(-1,-1,0)); //Get it centered at the origin
+	back_wall->scale(40); //Make it bigger!
+		
 	g_timmy.addThing(left_wall);
 	g_timmy.addThing(right_wall);
+	g_timmy.addThing(back_wall);
 }
 
 void drawScene(){
@@ -92,10 +96,10 @@ void drawScene(){
     glClearColor(0.0, 0.0, 0.0, 0.0);//Black background
     
 	g_pentax.update(DTIME);
-    g_lumia.setPosition(Vector4f(-5,0,0,1));//the light is attached to the camera
-
+	
 	//Now tell the World object to draw all its Things.
 	g_timmy.drawAll();
+	g_timmy.drawAxes();
 }
 
 void keyboardCallback(int key, int x, int y){

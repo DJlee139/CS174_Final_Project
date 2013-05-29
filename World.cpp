@@ -3,7 +3,11 @@
 #include <vector>
 #include "World.h"
 #include "Thing.h"
+#include "MeshMakers.h"
 using namespace std;
+using namespace Eigen;
+
+World::World() : mp_axes_mesh(NULL) {}
 
 void World::linkProgram() {
 	m_program = Util::InitShader("vPhong.vert","fPhong.frag");
@@ -21,4 +25,10 @@ void World::addThing(Thing* t) {
 void World::drawAll() {
 	for ( int i = 0; i < m_things.size(); i++ )
 		m_things[i]->draw();
+}
+
+void World::drawAxes() {
+	if (mp_axes_mesh == NULL ) //If this hasn't been created yet. Real janky, I know.
+		mp_axes_mesh = makeAxesMesh();
+	mp_axes_mesh->draw(Affine3f::Identity(), Vector4f(1,1,1,1));//white; no transformations
 }

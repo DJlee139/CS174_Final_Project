@@ -15,7 +15,7 @@ extern int g_draw_type;
 Mesh::Mesh(GLuint vao, int num_vertices, GLenum draw_mode) :
 	m_vao(vao), m_num_vertices(num_vertices), m_draw_mode(draw_mode) {}
 
-void Mesh::draw(Affine3f& wMo, Vector4f& l_color) {
+void Mesh::draw(const Affine3f& wMo, const Vector4f& l_color) {
 
     Affine3f cMw;
     Affine3f proj;
