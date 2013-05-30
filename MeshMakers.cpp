@@ -1,13 +1,13 @@
 //The shaders have to already be initiated by the time these functions happen!
 //This implementation file doesn't #include its own header file. It doesn't need to.
 #include "Mesh.h"
-#include "Eigen/dense"
+#include "Angel.h"
 #include <GLUT/glut.h>
 #include "World.h"
-using namespace Eigen;
+using namespace Angel;
 
-#define V(x,y,z) Vector4f(x,y,z,1)
-#define N(x,y,z) Vector3f(x,y,z)
+#define V(x,y,z) vec4(x,y,z,1)
+#define N(x,y,z) vec3(x,y,z)
 
 const int HIGH_COMPLEXITY = 0;
 const int MED_COMPLEXITY = 1;
@@ -18,8 +18,8 @@ int count; //So it can be used by multiple (recursive) calls to divideTriangle
 
 Mesh* makeCubeMesh() {
 	//This will use my hopefully straightforward and simple algorithm for making a cube.
-	Vector4f points[14]; //We'll need 14 total vertices for our method.
-	Vector4f corners[8] = {V(-10,10,10), V(10,10,10), V(-10,-10,10), V(10,-10,10), V(-10,10,-10), V(10,10,-10), V(-10,-10,-10), V(10,-10,-10)};
+	vec4 points[14]; //We'll need 14 total vertices for our method.
+	vec4 corners[8] = {V(-10,10,10), V(10,10,10), V(-10,-10,10), V(10,-10,10), V(-10,10,-10), V(10,10,-10), V(-10,-10,-10), V(10,-10,-10)};
 	/* Put the indices of vertices we'll be using for the triangle strip in order
 	Then use this ordering to actually put the points in place.*/
 	size_t strip_indices[14] = {4, 3, 2, 1, 5, 3, 7, 4, 8, 2, 6, 5, 8, 7};
@@ -51,8 +51,8 @@ Mesh* makeCubeMesh() {
 	return new Mesh(vao, 14, GL_TRIANGLE_STRIP);
 }
 
-Vector4f unit(const Vector4f &p) {
-    Vector4f c;
+vec4 unit(const vec4 &p) {
+    vec4 c;
     double d=0.0;
     for(int i=0; i<3; i++) d+=p[i]*p[i];
     d=sqrt(d);
@@ -61,8 +61,8 @@ Vector4f unit(const Vector4f &p) {
     return c;
 }
 
-void divideTriangle(Vector4f* vertices, Vector3f* normals, const Vector4f& a, const Vector4f& b, const Vector4f& c, int n){
-	Vector4f v1, v2, v3;
+void divideTriangle(vec4* vertices, vec3* normals, const vec4& a, const vec4& b, const vec4& c, int n){
+	vec4 v1, v2, v3;
     if(n>0)
     {
         v1 = unit(a + b);
@@ -75,24 +75,24 @@ void divideTriangle(Vector4f* vertices, Vector3f* normals, const Vector4f& a, co
     }
 	else{
 		vertices[count] = a;
-		normals[count] = a.head(3);
+		normals[count] = a.first3();
 		count++;
 		vertices[count] = b;
-		normals[count] = b.head(3);
+		normals[count] = b.first3();
 		count++;
 		vertices[count] = c;
-		normals[count] = c.head(3);
+		normals[count] = c.first3();
 		count++;
 	}
 }
 
-void generateSphere(const int complexity, Vector4f* vertices, Vector3f* normals){
+void generateSphere(const int complexity, vec4* vertices, vec3* normals){
 	count = 0;
-	Vector4f v[4];
-    v[0] = Vector4f(0.0, 0.0, 1.0, 1.0);
-    v[1] = Vector4f(0.0, 0.942809, -0.333333, 1.0);
-    v[2] = Vector4f(-0.816497, -0.471405, -0.333333, 1.0);
-    v[3] = Vector4f(0.816497, -0.471405, -0.333333, 1.0);
+	vec4 v[4];
+    v[0] = vec4(0.0, 0.0, 1.0, 1.0);
+    v[1] = vec4(0.0, 0.942809, -0.333333, 1.0);
+    v[2] = vec4(-0.816497, -0.471405, -0.333333, 1.0);
+    v[3] = vec4(0.816497, -0.471405, -0.333333, 1.0);
 	
 	/* All 3 of our spheres will start at the same spot; they'll just have different
 	subdivisions. Since 0 is the most complex, 5-0 will end up with the most vertices. */
@@ -103,7 +103,7 @@ void generateSphere(const int complexity, Vector4f* vertices, Vector3f* normals)
     //The total number of vertices is 4^(5-complexity+1)*3.
 }
 
-void sendVerticesAndNormals(Vector4f* vertices, const int size_v, Vector3f* normals, const int size_n, GLuint vao, GLuint buffer) {
+void sendVerticesAndNormals(vec4* vertices, const int size_v, vec3* normals, const int size_n, GLuint vao, GLuint buffer) {
 	//Gotta bind before we can send anything to the GPU
 	glBindVertexArrayAPPLE(vao);
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -125,8 +125,8 @@ void sendVerticesAndNormals(Vector4f* vertices, const int size_v, Vector3f* norm
 Mesh* makeSphereMesh(const int complexity) {
     // Initialize the data arrays on CPU. Make them all the same size cus it's simpler.
     int num_vert = 3*pow(4, 5 - complexity + 1);
-   Vector4f vertices[num_vert]; //For complexity = 1, need 4*4*3 = 48 vectors.
-	Vector3f normals[num_vert];
+   vec4 vertices[num_vert]; //For complexity = 1, need 4*4*3 = 48 vectors.
+	vec3 normals[num_vert];
    
    //Populate the vertices arrays for each of 3 different sphere complexities.
 	generateSphere(complexity, vertices, normals);
@@ -145,11 +145,11 @@ Mesh* makeSphereMesh(const int complexity) {
 Mesh* makeCircleMesh() {
 	const int complexity = 5;
 	int num_vert = 3*pow(4, complexity); // ?
-	Vector4f vertices[num_vert];
-	Vector3f normals[num_vert];
+	vec4 vertices[num_vert];
+	vec3 normals[num_vert];
 	
 	//Stuff from genSphere, adapted for 2D. Let's keep this simple. The circle has an area of 1!
-	Vector4f v[3];
+	vec4 v[3];
     v[0] = V(0, 0.565685, 0); //Multiplied all this by 60%
     v[1] = V(-0.489898, -0.28284, 0);
     v[2] = V(0.489898, -0.28284, 0);
@@ -169,8 +169,8 @@ Mesh* makeCircleMesh() {
 }
 
 Mesh* makeWallMesh() {
-	Vector4f vertices[] = {V(-0.5,0.5,0), V(0.5,0.5,0), V(-0.5,-0.5,0), V(0.5,-0.5,0)};
-	Vector3f normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
+	vec4 vertices[] = {V(-0.5,0.5,0), V(0.5,0.5,0), V(-0.5,-0.5,0), V(0.5,-0.5,0)};
+	vec3 normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
 	
 	GLuint vao, buffer;
 	glGenVertexArraysAPPLE(1, &vao);
@@ -184,8 +184,8 @@ Mesh* makeWallMesh() {
 
 Mesh* makeAxesMesh() {
 	double l = 100;
-	Vector4f vertices[] = {V(-l,0,0), V(l,0,0), V(0,-l,0), V(0,l,0), V(0,0,-l), V(0,0,l)};
-	Vector3f normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
+	vec4 vertices[] = {V(-l,0,0), V(l,0,0), V(0,-l,0), V(0,l,0), V(0,0,-l), V(0,0,l)};
+	vec3 normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
 	//All normals should probly be pointing in the +Z-direction right now, since the light is there.
 	
 	GLuint vao, buffer;

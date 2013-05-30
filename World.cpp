@@ -4,13 +4,14 @@
 #include "World.h"
 #include "Thing.h"
 #include "MeshMakers.h"
+#include "Angel.h"
 using namespace std;
-using namespace Eigen;
+using namespace Angel;
 
 World::World() : mp_axes_mesh(NULL) {}
 
 void World::linkProgram() {
-	m_program = Util::InitShader("vPhong.vert","fPhong.frag");
+	m_program = InitShader("vPhong.vert","fPhong.frag");
 	glUseProgram(m_program);
 }
 
@@ -30,5 +31,5 @@ void World::drawAll() {
 void World::drawAxes() {
 	if (mp_axes_mesh == NULL ) //If this hasn't been created yet. Real janky, I know.
 		mp_axes_mesh = makeAxesMesh();
-	mp_axes_mesh->draw(Affine3f::Identity(), Vector4f(1,1,1,1));//white; no transformations
+	mp_axes_mesh->draw(identity(), vec4(1,1,1,1));//white; no transformations
 }

@@ -1,6 +1,6 @@
 #include "Camera_Eigen.h"
-#include "Eigen/dense"
-using namespace Eigen;
+#include "Angel.h"
+using namespace Angel;
 
 Camera::Camera() {
 	resetView();
@@ -16,12 +16,11 @@ void Camera::init(double fovy, double aspect, double near, double far) {
 
 void Camera::update(double dt) {
 	//recompute the world to camera matrix in the camera
-	m_cMw.setIdentity();
-	m_cMw.translate(Vector3f(0,0,-10));
-	m_cMw.scale(m_zoom);
-	m_cMw *= AngleAxisf(m_altitude, Vector3f::UnitX());
-	m_cMw *= AngleAxisf(m_azimuth, Vector3f::UnitY());
-	m_cMw.translate(Vector3f(m_xtrans, m_ytrans, m_ztrans));
+	m_cMw  = Translate(vec3(m_xtrans,m_ytrans,m_ztrans-10));
+	m_cMw *= Scale(m_zoom);
+	m_cMw *= RotateX(m_altitude);
+	m_cMw *= RotateY(m_azimuth);
+
 }
 
 void Camera::resetView() {

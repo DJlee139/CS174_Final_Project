@@ -3,7 +3,7 @@
 
 #ifndef CAMERA_HEADER
 #define CAMERA_HEADER
-#include "Eigen/Dense"
+#include "Angel.h"
 
 //this class defines the camera's position, lookat point, rotation, etc
 //it also defines the kind of projection the camera is using: orthographics or perspective
@@ -13,18 +13,18 @@ class Camera {
 public:
 	Camera();
 	//Getter and setter functions
-	void setPosition(Eigen::Vector4f& p) { m_position = p; }
+	void setPosition(vec4& p) { m_position = p; }
 	void setAspect(const double a) { m_aspect = a; }
 	void setZoom(const double z) { m_zoom = z; }
-	Eigen::Affine3f getProjection() { return m_cMw; }
-	Eigen::Vector4f getPosition() { return m_position; }
+	Angel::mat4 getProjection() { return m_cMw; }
+	Angel::vec4 getPosition() { return m_position; }
 	double getAspect() { return m_aspect; }
 	double getZoom() { return m_zoom; }
 	double getFovy() { return m_fovy; }
 	double getZnear() { return m_znear; }
 	double getZfar() { return m_zfar; }
 
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    
 
 	void init(double, double, double, double);
 	void update(double);//update the m_cMw;
@@ -41,8 +41,8 @@ public:
 	void tiltDown();
 	void tiltUp();
 private:
-		Eigen::Affine3f m_cMw; //The projection matrix, if we want to call it that.
-	    Eigen::Vector4f m_position;
+		Angel::mat4 m_cMw; //The projection matrix, if we want to call it that.
+	    Angel::vec4 m_position;
 	    //Define the perspective division:
 		double m_fovy;
 		double m_aspect;

@@ -1,11 +1,11 @@
 #include "Mesh.h"
 #include "World.h"
 #include <GLUT/glut.h>
-#include "Eigen/dense"
+#include "Angel.h"
 #include "Camera_Eigen.h"
 #include "Light.h"
 #include "Utility.h"
-using namespace Eigen;
+using namespace Angel;
 
 extern World g_timmy;
 extern Camera g_pentax;
@@ -16,13 +16,13 @@ Mesh::Mesh(GLuint vao, int num_vertices, GLenum draw_mode) :
 	m_vao(vao), m_num_vertices(num_vertices), m_draw_mode(draw_mode) {}
 
 void Mesh::draw() {
-	draw(Affine3f::Identity(), Vector4f(1,1,1,1));
+	draw(identity(), vec4(1,1,1,1));
 }
 
-void Mesh::draw(const Affine3f& wMo, const Vector4f& l_color) {
+void Mesh::draw(const mat4& wMo, const vec4& l_color) {
 
-    Affine3f cMw;
-    Affine3f proj;
+    mat4 cMw;
+    mat4 proj;
 
     glBindVertexArrayAPPLE(m_vao);
 
@@ -33,16 +33,16 @@ void Mesh::draw(const Affine3f& wMo, const Vector4f& l_color) {
     GLuint world2camera = glGetUniformLocation(g_timmy.getShaderz(), "cMw"); 
 	GLuint projection = glGetUniformLocation(g_timmy.getShaderz(), "proj");
 
-    //wMo.setIdentity(); //No transformations for a plain mesh
-    proj = Util::Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
+    //This is Angel::Perspective, which is found in mat.h; not Util::Perspective. It's the same.
+    proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
 	cMw = g_pentax.getProjection();
  
-    glUniformMatrix4fv( object2world , 1, false, wMo.data() );
-    glUniformMatrix4fv( world2camera, 1, false, cMw.data());
-    glUniformMatrix4fv( projection, 1, false, proj.data());
-	glUniform4fv(camera_position, 1, g_pentax.getPosition().data());
-    glUniform4fv(light_position, 1, g_lumia.getPosition().data());
-  	glUniform4fv(color,1,l_color.data());
+    glUniformMatrix4fv( object2world , 1, false, wMo );
+    glUniformMatrix4fv( world2camera, 1, false, cMw);
+    glUniformMatrix4fv( projection, 1, false, proj);
+	glUniform4fv(camera_position, 1, g_pentax.getPosition());
+    glUniform4fv(light_position, 1, g_lumia.getPosition());
+  	glUniform4fv(color,1,l_color);
 	
 	switch (g_draw_type) {
         case DRAW_MESH:
