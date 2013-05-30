@@ -35,7 +35,7 @@ void Mesh::draw(const Affine3f& wMo, const Vector4f& l_color) {
 
     //wMo.setIdentity(); //No transformations for a plain mesh
     proj = Util::Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
-	cMw = g_pentax.getProjection();
+	cMw = g_pentax.getModelview();
  
     glUniformMatrix4fv( object2world , 1, false, wMo.data() );
     glUniformMatrix4fv( world2camera, 1, false, cMw.data());
