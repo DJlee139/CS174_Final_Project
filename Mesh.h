@@ -11,6 +11,7 @@
 class Mesh {
 	public:
 		Mesh(GLuint, int, GLenum);
+		void draw();
 		void draw(const Eigen::Affine3f&, const Eigen::Vector4f&);
 	private:
 		GLuint m_vao;

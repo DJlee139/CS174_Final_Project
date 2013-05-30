@@ -14,6 +14,7 @@ const int MED_COMPLEXITY = 1;
 const int LOW_COMPLEXITY = 2;
 
 extern World g_timmy;
+int count; //So it can be used by multiple (recursive) calls to divideTriangle
 
 Mesh* makeCubeMesh() {
 	//This will use my hopefully straightforward and simple algorithm for making a cube.
@@ -60,7 +61,6 @@ Vector4f unit(const Vector4f &p) {
     return c;
 }
 
-int count = 0;
 void divideTriangle(Vector4f* vertices, Vector3f* normals, const Vector4f& a, const Vector4f& b, const Vector4f& c, int n){
 	Vector4f v1, v2, v3;
     if(n>0)
@@ -87,6 +87,7 @@ void divideTriangle(Vector4f* vertices, Vector3f* normals, const Vector4f& a, co
 }
 
 void generateSphere(const int complexity, Vector4f* vertices, Vector3f* normals){
+	count = 0;
 	Vector4f v[4];
     v[0] = Vector4f(0.0, 0.0, 1.0, 1.0);
     v[1] = Vector4f(0.0, 0.942809, -0.333333, 1.0);
@@ -141,8 +142,34 @@ Mesh* makeSphereMesh(const int complexity) {
 	return new Mesh(vao, num_vert, GL_TRIANGLES);
 }
 
+Mesh* makeCircleMesh() {
+	const int complexity = 5;
+	int num_vert = 3*pow(4, complexity); // ?
+	Vector4f vertices[num_vert];
+	Vector3f normals[num_vert];
+	
+	//Stuff from genSphere, adapted for 2D. Let's keep this simple. The circle has an area of 1!
+	Vector4f v[3];
+    v[0] = V(0, 0.565685, 0); //Multiplied all this by 60%
+    v[1] = V(-0.489898, -0.28284, 0);
+    v[2] = V(0.489898, -0.28284, 0);
+    
+    //Now divide up our initial triangle:
+    count = 0;
+    divideTriangle(vertices, normals, v[0], v[1], v[2], complexity);
+	
+	//Create the Vertex Array and Buffer.
+    GLuint vao, buffer;
+    glGenVertexArraysAPPLE(1, &vao);
+    glBindVertexArrayAPPLE(vao);
+    glGenBuffers(1, &buffer);
+
+	sendVerticesAndNormals(vertices, sizeof(vertices), normals, sizeof(normals), vao, buffer);
+	return new Mesh(vao, num_vert, GL_TRIANGLES);
+}
+
 Mesh* makeWallMesh() {
-	Vector4f vertices[] = {V(0,1,0), V(1,1,0), V(0,0,0), V(1,0,0)};
+	Vector4f vertices[] = {V(-0.5,0.5,0), V(0.5,0.5,0), V(-0.5,-0.5,0), V(0.5,-0.5,0)};
 	Vector3f normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
 	
 	GLuint vao, buffer;

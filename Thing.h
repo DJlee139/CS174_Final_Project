@@ -26,8 +26,8 @@ class Thing {
 		void popMatrix();
 	protected:
 		Mesh* m_mesh;
-	private:
 		Eigen::Affine3f m_transformation;
+	private:
 		std::stack<Eigen::Affine3f> m_transformation_stack;
 		Eigen::Vector4f m_color;
 		World* m_world;

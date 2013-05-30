@@ -10,8 +10,10 @@
 #include "Mesh.h"
 #include "Cube.h"
 #include "Thing.h"
+#include "Thing2D.h"
 #include "Sphere.h"
 #include "Wall.h"
+#include "Circle.h"
 #include "World.h"
 using namespace Eigen;
 
@@ -34,7 +36,7 @@ World g_timmy;
 Camera g_pentax;
 Light g_lumia;
 Timer g_timer ;
-Mesh* gp_cube_mesh, *gp_sphere_mesh, *gp_wall_mesh;
+Mesh* gp_cube_mesh, *gp_sphere_mesh, *gp_wall_mesh, *gp_circle_mesh;
 
 void initGeometry() {
 	/*I just call functions that assign vertices and normals to all the global
@@ -43,6 +45,7 @@ void initGeometry() {
 	gp_cube_mesh = makeCubeMesh();
     gp_sphere_mesh = makeSphereMesh(1);
     gp_wall_mesh = makeWallMesh();
+    gp_circle_mesh = makeCircleMesh();
 }
 
 void initScene(){
@@ -64,30 +67,25 @@ void initScene(){
 	
 	initGeometry();
 	
-	Thing* im_a_sphere = new MySphere();
+	Thing* im_a_sphere = new Sphere();
 	im_a_sphere->setColor(Vector4f(0,1,0,1));
 	im_a_sphere->translate(Vector3f(-7,0,0));
 	im_a_sphere->scale(3.5);
-	g_timmy.addThing(im_a_sphere);
 
-	Thing* left_wall = new Wall(); //All the walls start out perpendicular to the Z axis
-	Thing* right_wall = new Wall();
-	Thing* bottom_wall = new Wall();
-	Thing* back_wall = new Wall();
-	Thing* top_wall = new Wall();
-/*	
-	left_wall->scale(20);
-	right_wall->scale(40);
-	left_wall->rotateY(90);
-	left_wall->translate(Vector3f(-2.5,0,-10));
-	right_wall->translate(Vector3f(2.5,0,-10));
-*/
+	Thing2D* im_a_circle = new Circle();
+	im_a_circle->setColor(Vector4f(0,0,1,1));
+	im_a_circle->translate(Vector3f(2,2,0));
+
+	Thing2D* back_wall = new Wall();
 	back_wall->translate(Vector3f(-1,-1,0)); //Get it centered at the origin
 	back_wall->scale(40); //Make it bigger!
-		
-	g_timmy.addThing(left_wall);
-	g_timmy.addThing(right_wall);
-	g_timmy.addThing(back_wall);
+	
+	im_a_circle->attachTo(*back_wall);
+	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.
+	
+	g_timmy.addThing(im_a_sphere);
+	g_timmy.addThing((Thing*)im_a_circle);
+	g_timmy.addThing((Thing*)back_wall);
 }
 
 void drawScene(){

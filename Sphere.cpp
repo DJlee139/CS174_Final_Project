@@ -3,4 +3,4 @@
 
 extern Mesh* gp_sphere_mesh;
 
-MySphere::MySphere() : Thing(gp_sphere_mesh) {}
+Sphere::Sphere() : Thing(gp_sphere_mesh) {}

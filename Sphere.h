@@ -3,9 +3,9 @@
 
 #include "Thing.h"
 
-class MySphere : public Thing {
+class Sphere : public Thing {
 	public:
-		MySphere();
+		Sphere();
 };
 
 #endif
