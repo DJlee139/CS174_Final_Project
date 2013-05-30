@@ -49,7 +49,7 @@ void initGeometry() {
 }
 
 void initScene(){
-    g_pentax.init(60, g_window_width/g_window_height , 0.1, 400);
+    g_pentax.init(70, g_window_width/g_window_height , 0.1, 400);
     g_pentax.setZoom(g_pentax.getZoom() * 0.25);
     g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     

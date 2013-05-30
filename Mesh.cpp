@@ -35,7 +35,7 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
 
     //This is Angel::Perspective, which is found in mat.h; not Util::Perspective. It's the same.
     proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
-	cMw = g_pentax.getProjection();
+	cMw = g_pentax.getModelview();
  
     glUniformMatrix4fv( object2world , 1, false, wMo );
     glUniformMatrix4fv( world2camera, 1, false, cMw);
