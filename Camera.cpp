@@ -34,8 +34,8 @@ void Camera::moveLeft() {
 }
 
 void Camera::moveRight() {
-	m_xtrans += m_camera_inc*sin(m_yaw*M_PI/180);
-	m_ztrans -= m_camera_inc*cos(m_yaw*M_PI/180);
+	m_xtrans -= m_camera_inc*cos(m_yaw*M_PI/180);
+    m_ztrans -= m_camera_inc*sin(m_yaw*M_PI/180);  		
  }
 //TODO delete these functions eventually
 void Camera::moveUp() { m_ytrans -= m_camera_inc; }
@@ -47,8 +47,8 @@ void Camera::moveForward() {
  }
 
 void Camera::moveBackward() {
-	m_xtrans -= m_camera_inc*cos(m_yaw*M_PI/180);
-    m_ztrans -= m_camera_inc*sin(m_yaw*M_PI/180);  			
+	m_xtrans += m_camera_inc*sin(m_yaw*M_PI/180);
+	m_ztrans -= m_camera_inc*cos(m_yaw*M_PI/180);
  }
 
 void Camera::rotateLeft() { m_yaw += S_ROTATE_AMOUNT; }
