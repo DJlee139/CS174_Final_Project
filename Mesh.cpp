@@ -37,9 +37,9 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
     proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
 	cMw = g_pentax.getModelview();
  
-    glUniformMatrix4fv( object2world , 1, false, wMo );
-    glUniformMatrix4fv( world2camera, 1, false, cMw);
-    glUniformMatrix4fv( projection, 1, false, proj);
+    glUniformMatrix4fv( object2world , 1, true, wMo );
+    glUniformMatrix4fv( world2camera, 1, true, cMw);
+    glUniformMatrix4fv( projection, 1, true, proj);
 	glUniform4fv(camera_position, 1, g_pentax.getPosition());
     glUniform4fv(light_position, 1, g_lumia.getPosition());
   	glUniform4fv(color,1,l_color);
