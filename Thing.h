@@ -10,6 +10,7 @@ class World; //Can't include World.h cus there's a circular dependency
 class Thing {
 	public:
 		Thing(Mesh*);
+		void* operator new(size_t);
 		void draw();
 		//Getter and setter functions
 		void setWorld(World* w) { m_world = w; }
@@ -25,7 +26,7 @@ class Thing {
 		void pushMatrix();
 		void popMatrix();
 	protected:
-		Mesh* m_mesh;
+		Mesh* mp_mesh;
 		Angel::mat4 m_transformation;
 	private:
 		std::stack<Angel::mat4> m_transformation_stack;

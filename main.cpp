@@ -77,15 +77,19 @@ void initScene(){
 	im_a_circle->translate(vec3(2,2,0));
 
 	Thing2D* back_wall = new Wall();
-	back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin
-	back_wall->scale(40); //Make it bigger!
+	//back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin // What does this do????
+	back_wall->scale(100); //Make it bigger!
+	
+	Thing2D* floor = new Wall();
+	floor->scale(100);
+	floor->rotateY(90); //Make it on the ground
 	
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.
-	
-	g_timmy.addThing(im_a_sphere);
-	g_timmy.addThing((Thing*)im_a_circle);
-	g_timmy.addThing((Thing*)back_wall);
+	//g_timmy.addThing(im_a_sphere);
+//	g_timmy.addThing((Thing*)im_a_circle); No need right now.
+	//g_timmy.addThing((Thing*)back_wall);
+	//g_timmy.addThing((Thing*)floor);
 }
 
 void drawScene(){
@@ -190,7 +194,7 @@ int main() {
     glutInit(new int(0), new char*); //These are never used.
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(g_window_width,g_window_height);
-    glutCreateWindow("Downtreading"); //Random title
+    glutCreateWindow("Rankwise"); //Random title
     glutIdleFunc(idleCallback);
 	glutReshapeFunc (reshapeCallback);
    /* Turns out you don't need a keyboardFunc if the special Func handles normal keys */
