@@ -49,7 +49,7 @@ void initGeometry() {
 }
 
 void initScene(){
-    g_pentax.init(70, g_window_width/g_window_height , 0.1, 400);
+    g_pentax.init(70, g_window_width/g_window_height , 0.1, 800); //znear, zfar
     g_pentax.setZoom(g_pentax.getZoom() * 0.25);
     g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     
@@ -92,6 +92,7 @@ void drawScene(){
    
     glEnable( GL_DEPTH_TEST );
     glClearColor(0.0, 0.0, 0.0, 0.0);//Black background
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
 	g_pentax.update(DTIME);
 	
