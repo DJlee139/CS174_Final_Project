@@ -2,7 +2,7 @@
 // Adapted by [Our Team Name?] 5/2013
 //  Copyright 2011 Jingyi Fang. All rights reserved.
 
-#include "Camera_Eigen.h"
+#include "Camera.h"
 #include "Light.h"
 #include "Timer.h"
 #include "MeshMakers.h"

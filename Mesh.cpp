@@ -2,9 +2,9 @@
 #include "World.h"
 #include <GLUT/glut.h>
 #include "Angel.h"
-#include "Camera_Eigen.h"
+#include "Camera.h"
 #include "Light.h"
-#include "Utility.h"
+
 using namespace Angel;
 
 extern World g_timmy;

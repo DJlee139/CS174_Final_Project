@@ -1,5 +1,5 @@
 #include <GLUT/glut.h>
-#include "Utility.h"
+
 #include <vector>
 #include "World.h"
 #include "Thing.h"

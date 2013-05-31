@@ -51,7 +51,7 @@ private:
 		static const double S_ALTITUDE_DEFAULT = 0;
 		static const double S_TILT_DEFAULT = 30;
 		static const double S_YAW_DEFAULT = 0;
-		static const double S_CAMERA_INC_DEFAULT = 0.25; //amount to move on key press
+		static const double S_CAMERA_INC_DEFAULT = 1; //amount to move on key press
 		static const double S_ROTATE_AMOUNT = 3;
 		static const double S_TILT_AMOUNT = 1;
 		double m_xtrans, m_ytrans, m_ztrans, m_azimuth, m_altitude, m_tilt, m_yaw;

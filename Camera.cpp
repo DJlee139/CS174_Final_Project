@@ -1,4 +1,4 @@
-#include "Camera_Eigen.h"
+#include "Camera.h"
 #include "Angel.h"
 using namespace Angel;
 

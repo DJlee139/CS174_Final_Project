@@ -1,5 +1,4 @@
-#include "Utility.h"
-#include "Camera_Eigen.h"
+#include "Camera.h"
 #include "Light.h"
 #include "Object.h"
 #include "Timer.h"
