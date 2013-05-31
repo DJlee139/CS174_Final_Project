@@ -6,22 +6,23 @@
 //  Copyright 2012 UCLA. All rights reserved.
 //
 
-#ifndef FEMCloth2D_Light_h
-#define FEMCloth2D_Light_h
-#include "Utility.h"
+#ifndef LIGHT_HEADER
+#define LIGHT_HEADER
+
+#include "Angel.h"
 
 class Light {
 public:
 	//Getter and setter functions
-	void setPosition(const Eigen::Vector4f& p) { m_position = p; }
-	void setColor(const Eigen::Vector4f& c) { m_color = c; }
-	Eigen::Vector4f getPosition() { return m_position; }
+	void setPosition(const Angel::vec4& p) { m_position = p; }
+	void setColor(const Angel::vec4& c) { m_color = c; }
+	vec4 getPosition() { return m_position; }
 	
 private:
-    Eigen::Vector4f m_position;
-    Eigen::Vector4f m_color;
+    Angel::vec4 m_position;
+    Angel::vec4 m_color;
     
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    
 };
 
 

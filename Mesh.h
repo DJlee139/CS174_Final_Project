@@ -2,7 +2,7 @@
 #define MESH_HEADER
 
 #include <GLUT/glut.h>
-#include "Eigen/dense"
+#include "Angel.h"
 
 #define DRAW_MESH 1
 #define DRAW_PHONG 2
@@ -12,7 +12,7 @@ class Mesh {
 	public:
 		Mesh(GLuint, int, GLenum);
 		void draw();
-		void draw(const Eigen::Affine3f&, const Eigen::Vector4f&);
+		void draw(const Angel::mat4&, const Angel::vec4&);
 	private:
 		GLuint m_vao;
 		int m_num_vertices;

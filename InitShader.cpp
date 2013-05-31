@@ -1,27 +1,11 @@
-#include "Utility.h"
-using namespace Eigen;
 
-namespace Util{
+#include "Angel.h"
 
-Affine3f Perspective(const GLfloat fovy, const GLfloat aspect, const GLfloat zNear, const GLfloat zFar){
+namespace Angel {
 
-	GLfloat top   = tan(fovy*DegreesToRadians/2) * zNear;
-    GLfloat right = top * aspect;
-
-    Affine3f c;
-	c.setIdentity();
-    c(0,0) = zNear/right;
-    c(1,1) = zNear/top;
-    c(2,2) = -(zFar + zNear)/(zFar - zNear);
-    c(2,3) = -2.0f*zFar*zNear/(zFar - zNear);
-    c(3,2) = -1.0f;
-    return c;
-
-}
-
-#define _CRT_SECURE_NO_WARNINGS
 // Create a NULL-terminated string by reading the provided file
-static char* readShaderSource(const char* shaderFile)
+static char*
+readShaderSource(const char* shaderFile)
 {
     FILE* fp = fopen(shaderFile, "r");
 
@@ -36,12 +20,14 @@ static char* readShaderSource(const char* shaderFile)
 
     buf[size] = '\0';
     fclose(fp);
- 
+
     return buf;
 }
 
+
 // Create a GLSL program object from vertex and fragment shader files
-GLuint InitShader(const char* vShaderFile, const char* fShaderFile)
+GLuint
+InitShader(const char* vShaderFile, const char* fShaderFile)
 {
     struct Shader {
 	const char*  filename;
@@ -108,9 +94,4 @@ GLuint InitShader(const char* vShaderFile, const char* fShaderFile)
     return program;
 }
 
-double getRand(){
-//return a random number from 0~1
-	return (rand()%1000)/999.0;
-}
-
-}
+}  // Close namespace Angel block

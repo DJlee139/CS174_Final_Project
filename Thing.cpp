@@ -1,12 +1,12 @@
 #include "Thing.h"
-#include "Eigen/dense"
+#include "Angel.h"
 #include "World.h"
-using namespace Eigen;
+using namespace Angel;
 
 Thing::Thing(Mesh* m) : m_mesh(m) {
 	//To build a thing, start by setting its transformation matrix to identity.
-	m_transformation.setIdentity();
-	m_color = Vector4f(1,1,1,1); //Default color is white.
+	m_transformation = identity();
+	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
 void Thing::draw() {
@@ -16,32 +16,32 @@ void Thing::draw() {
 //All the transformation functions
 
 void Thing::rotateX(const double a_angle){
-	m_transformation.rotate(AngleAxisf(a_angle*M_PI/180, Vector3f::UnitX()));
+	m_transformation *= RotateX(a_angle*M_PI/180);
 }
 
 void Thing::rotateY(const double a_angle){
-    m_transformation.rotate(AngleAxisf(a_angle*M_PI/180, Vector3f::UnitY()));
+    m_transformation *= RotateY(a_angle*M_PI/180);
 
 }
 
 void Thing::rotateZ(const double a_angle){
-	m_transformation.rotate(AngleAxisf(a_angle*M_PI/180, Vector3f::UnitZ()));
+	m_transformation *= RotateZ(a_angle*M_PI/180);
 }
 
-void Thing::translate(const Vector3f& a_translation){
-	m_transformation.translate(a_translation);
+void Thing::translate(const vec3& a_translation){
+	m_transformation *= Translate(a_translation);
 }
 
-void Thing::scale(const Vector3f& a_scale){
-	m_transformation.scale(a_scale);
+void Thing::scale(const vec3& a_scale){
+	m_transformation *Scale(a_scale);
 }
 
 void Thing::scale(const double a_scale){
-	m_transformation.scale(a_scale);
+	m_transformation *= Scale(a_scale);
 }
 	
 void Thing::setIdentity(){
-	m_transformation.setIdentity();
+	m_transformation = identity();
 }
 
 void Thing::pushMatrix(){

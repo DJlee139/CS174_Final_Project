@@ -2,7 +2,6 @@
 // Adapted by [Our Team Name?] 5/2013
 //  Copyright 2011 Jingyi Fang. All rights reserved.
 
-#include "Utility.h"
 #include "Camera_Eigen.h"
 #include "Light.h"
 #include "Timer.h"
@@ -15,7 +14,8 @@
 #include "Wall.h"
 #include "Circle.h"
 #include "World.h"
-using namespace Eigen;
+#include "Angel.h"
+using namespace Angel;
 
 // Constants ---------------------------------------------------------------------------------------
 int g_window_width = 1200;
@@ -49,12 +49,12 @@ void initGeometry() {
 }
 
 void initScene(){
-    g_pentax.init(70, g_window_width/g_window_height , 0.1, 400);
+    g_pentax.init(70, g_window_width/g_window_height , 0.1, 800); //znear, zfar
     g_pentax.setZoom(g_pentax.getZoom() * 0.25);
     g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     
-    g_lumia.setColor(Vector4f(1,1,1,1));
-    g_lumia.setPosition(Vector4f(0,0,14,1)); //Let's try to keep the light at the camera ?
+    g_lumia.setColor(vec4(1,1,1,1));
+    g_lumia.setPosition(vec4(0,0,14,1)); //Let's try to keep the light at the camera ?
    
     //Set up the global drawer. BUT FIRST! We have to link the shaderz because otherwise
     //none of the InitDraws will work.
@@ -68,16 +68,16 @@ void initScene(){
 	initGeometry();
 	
 	Thing* im_a_sphere = new Sphere();
-	im_a_sphere->setColor(Vector4f(0,1,0,1));
-	im_a_sphere->translate(Vector3f(-7,0,0));
+	im_a_sphere->setColor(vec4(0,1,0,1));
+	im_a_sphere->translate(vec3(-7,0,0));
 	im_a_sphere->scale(3.5);
 
 	Thing2D* im_a_circle = new Circle();
-	im_a_circle->setColor(Vector4f(0,0,1,1));
-	im_a_circle->translate(Vector3f(2,2,0));
+	im_a_circle->setColor(vec4(0,0,1,1));
+	im_a_circle->translate(vec3(2,2,0));
 
 	Thing2D* back_wall = new Wall();
-	back_wall->translate(Vector3f(-1,-1,0)); //Get it centered at the origin
+	back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin
 	back_wall->scale(40); //Make it bigger!
 	
 	im_a_circle->attachTo(*back_wall);
@@ -92,6 +92,7 @@ void drawScene(){
    
     glEnable( GL_DEPTH_TEST );
     glClearColor(0.0, 0.0, 0.0, 0.0);//Black background
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
 	g_pentax.update(DTIME);
 	
