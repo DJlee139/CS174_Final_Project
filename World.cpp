@@ -31,6 +31,21 @@ void World::addThing(Thing* t) {
 	m_things.push_back(t);
 }
 
+void World::addBullet(Bullet* b) {
+	b->setWorld(this);
+	m_bullets.push_back(t);
+}
+
+void World::addWall(Wall* w) {
+	w->setWorld(this);
+	m_walls.push_back(w);
+}
+
+void World::addCircle(Circle* c) {
+	c->setWorld(this);
+	m_circles.push_back(c);
+}
+
 void World::drawAll() {
 	for ( int i = 0; i < m_things.size(); i++ )
 		m_things[i]->draw();

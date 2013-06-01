@@ -28,10 +28,10 @@ class Thing {
 	protected:
 		Mesh* m_mesh;
 		Angel::mat4 m_transformation;
+		World* m_world;
 	private:
 		std::stack<Angel::mat4> m_transformation_stack;
 		vec4 m_color;
-		World* m_world;
 };
 
 #endif

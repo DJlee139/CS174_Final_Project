@@ -12,6 +12,9 @@
 #endif  // __APPLE__
 
 #include "Thing.h"
+class Bullet;
+class Wall;
+class Circle;
 class Mesh;
 
 class World {
@@ -19,15 +22,24 @@ class World {
 		World(); //Only needed to set a pointer to NULL.
 		void linkProgram();
 		void addThing(Thing*);
+		void addBullet(Bullet*);
+		void addWall(Wall*);
+		void addCircle(Circle*);
+		void add
 		void drawAll();
 		void drawAxes();
 		void moveAll();
 		//Getter functions
 		GLuint getShaderz() { return m_program; }
+		std::vector<Bullet*>* getBulletList() { return &m_bullets; }
+		std::vector<Wall*>* getWallList() { return &m_walls; }
 	private:
 		Mesh* mp_axes_mesh;
 		GLuint m_program;
 		std::vector<Thing*> m_things;
+		std::vector<Bullet*> m_bullets;
+		std::vector<Wall*> m_walls;
+		std::vector<Circle*> m_circles;
 };
 
 #endif
