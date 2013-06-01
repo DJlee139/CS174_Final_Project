@@ -3,23 +3,14 @@
 #include "World.h"
 using namespace Angel;
 
-extern World g_timmy;
-
-Thing::Thing(Mesh* m) : mp_mesh(m) {
+Thing::Thing(Mesh* m) : m_mesh(m) {
 	//To build a thing, start by setting its transformation matrix to identity.
 	m_transformation = identity();
 	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
-void* Thing::operator new(size_t s) {
-	//All Things automatically add themselves to the World
-	void* p = malloc(s);
-	g_timmy.addThing((Thing*)p);
-	return p;
-}
-
 void Thing::draw() {
-	mp_mesh->draw(m_transformation, m_color);
+	m_mesh->draw(m_transformation, m_color);
 }
 
 //All the transformation functions
@@ -38,7 +29,7 @@ void Thing::rotateZ(const double a_angle){
 }
 
 void Thing::translate(const vec3& a_translation){
-	m_transformation *= Translate(a_translation);
+	m_transformation = Translate(a_translation); //was *=
 }
 
 void Thing::scale(const vec3& a_scale){

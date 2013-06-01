@@ -15,7 +15,14 @@
 #include "Circle.h"
 #include "World.h"
 #include "Angel.h"
+#include "Bullet.h"
 using namespace Angel;
+
+
+//TEST for bullets:
+
+
+
 
 // Constants ---------------------------------------------------------------------------------------
 int g_window_width = 1200;
@@ -50,7 +57,7 @@ void initGeometry() {
 
 void initScene(){
     g_pentax.init(70, g_window_width/g_window_height , 0.1, 800); //znear, zfar
-    g_pentax.setZoom(g_pentax.getZoom() * 0.25);
+    //g_pentax.setZoom(g_pentax.getZoom() * 0.25);
     g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     
     g_lumia.setColor(vec4(1,1,1,1));
@@ -77,19 +84,15 @@ void initScene(){
 	im_a_circle->translate(vec3(2,2,0));
 
 	Thing2D* back_wall = new Wall();
-	//back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin // What does this do????
-	back_wall->scale(100); //Make it bigger!
-	
-	Thing2D* floor = new Wall();
-	floor->scale(100);
-	floor->rotateY(90); //Make it on the ground
+	back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin
+	back_wall->scale(40); //Make it bigger!
 	
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.
-	//g_timmy.addThing(im_a_sphere);
-//	g_timmy.addThing((Thing*)im_a_circle); No need right now.
-	//g_timmy.addThing((Thing*)back_wall);
-	//g_timmy.addThing((Thing*)floor);
+	
+	g_timmy.addThing(im_a_sphere);
+	g_timmy.addThing((Thing*)im_a_circle);
+	g_timmy.addThing((Thing*)back_wall);
 }
 
 void drawScene(){
@@ -97,7 +100,14 @@ void drawScene(){
     glEnable( GL_DEPTH_TEST );
     glClearColor(0.0, 0.0, 0.0, 0.0);//Black background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    
+    //move the bullets! this automatically alters their matrices
+	/*for(int i = 0; i < 10; i++)
+	{
+		if(bullets[i] != NULL){
+			bullets[i]->move();
+		}
+	}*/
+	g_timmy.moveAll();
 	g_pentax.update(DTIME);
 	
 	//Now tell the World object to draw all its Things.
@@ -105,11 +115,13 @@ void drawScene(){
 	g_timmy.drawAxes();
 }
 
-void keyboardCallback(int key, int x, int y){
-	/* This is a key callback function that accepts the key as an int. You might think most
-	keys are chars, but we want this to be both a keyboard callback and a special
-	callback..... and it turns out that for ASCII keys, int is the same as char! */
-	switch ( key ) {
+
+
+
+
+void keyboard(unsigned char key, int x, int y){
+
+	switch(key){
 		case 'q':
 		case 'Q':
 			exit(0);
@@ -118,35 +130,30 @@ void keyboardCallback(int key, int x, int y){
 			g_pentax.resetView();
 			break;
 		//Now some cases for dealing with camera movement:
+		case ' ':
+			
+			//bullets[iter] = new Bullet(-g_pentax.getPosition(), g_pentax.getTilt(), g_pentax.getYaw());
+			//std::cout << x.x + " " + x.y + " " + x.z + "\n";
+			g_timmy.addThing((Thing*) new Bullet(-g_pentax.getPosition(), g_pentax.getTilt(), g_pentax.getYaw()));//(Thing*)bullets[iter++]);
+			break;
+			
 		case 'j':
 			g_pentax.moveLeft();
 			break;
-		case 'k':
+		case 'l':
 			g_pentax.moveRight();
 			break;
 		case 'i':
 			g_pentax.moveForward();
 			break;
-		case 'm':
+		case 'k':
 			g_pentax.moveBackward();
 			break;
-		case GLUT_KEY_DOWN:
-			g_pentax.moveDown();
-			break;
-		case GLUT_KEY_UP:
+		case 'w':
 			g_pentax.moveUp();
 			break;
-		case GLUT_KEY_RIGHT:
-			g_pentax.rotateRight();
-			break;
-		case GLUT_KEY_LEFT:
-			g_pentax.rotateLeft();
-			break;
-		case 'w':
-			g_pentax.tiltUp();
-			break;
 		case 's':
-			g_pentax.tiltDown();
+			g_pentax.moveDown();
 			break;
 		case '1':
 			g_draw_type = DRAW_MESH;
@@ -154,6 +161,37 @@ void keyboardCallback(int key, int x, int y){
 		case '2':
 			g_draw_type = DRAW_PHONG;
 			break;
+	}
+
+
+
+
+
+}
+
+
+
+
+
+void specKeyboardCallback(int key, int x, int y){
+	/* This is a key callback function that accepts the key as an int. You might think most
+	keys are chars, but we want this to be both a keyboard callback and a special
+	callback..... and it turns out that for ASCII keys, int is the same as char! */
+	switch ( key ) {
+		
+		case GLUT_KEY_DOWN:
+			g_pentax.tiltDown();
+			break;
+		case GLUT_KEY_UP:
+			g_pentax.tiltUp();
+			break;
+		case GLUT_KEY_RIGHT:
+			g_pentax.rotateLeft();
+			break;
+		case GLUT_KEY_LEFT:
+			g_pentax.rotateRight();
+			break;
+		
 	}
 
 	glutPostRedisplay();
@@ -177,6 +215,8 @@ void reshapeCallback(int w, int h){
 
 void idleCallback(){
     
+	
+	
 	TIME = g_timer.getElapsedTime() ;
     
 	DTIME = TIME - TIME_LAST;
@@ -194,11 +234,18 @@ int main() {
     glutInit(new int(0), new char*); //These are never used.
     glutInitDisplayMode(GLUT_RGBA | GLUT_DEPTH | GLUT_DOUBLE);
 	glutInitWindowSize(g_window_width,g_window_height);
-    glutCreateWindow("Rankwise"); //Random title
+    glutCreateWindow("Downtreading"); //Random title
+
+	#ifndef __APPLE__ //Because Apple doesn't need GLEW and I can't #include it.
+		glewExperimental = GL_TRUE;
+		glewInit();
+	#endif
+
     glutIdleFunc(idleCallback);
 	glutReshapeFunc (reshapeCallback);
-   /* Turns out you don't need a keyboardFunc if the special Func handles normal keys */
-    glutSpecialFunc(keyboardCallback);
+
+   glutKeyboardFunc(keyboard);
+    glutSpecialFunc(specKeyboardCallback);
     glutDisplayFunc(displayCallback);
 
     initScene();

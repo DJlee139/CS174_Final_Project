@@ -24,6 +24,9 @@ public:
 	double getZnear() { return m_znear; }
 	double getZfar() { return m_zfar; }
 
+	double getTilt(){ return m_tilt;}
+	double getYaw(){ return m_yaw;}
+
 	void init(double, double, double, double);
 	void update(double);//update the m_cMw;
 	//My new functions for moving the camera

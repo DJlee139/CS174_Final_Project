@@ -1,12 +1,20 @@
-#include <GLUT/glut.h>
+#ifdef __APPLE__  // include Mac OS X verions of headers
+#  include <OpenGL/OpenGL.h>
+#  include <GLUT/glut.h>
+#else // non-Mac OS X operating systems
+#  include <GL/glew.h>
+#  include <GL/freeglut.h>
+#  include <GL/freeglut_ext.h>
+#endif  // __APPLE__
 
 #include <vector>
 #include "World.h"
 #include "Thing.h"
 #include "MeshMakers.h"
 #include "Angel.h"
-using namespace std;
 using namespace Angel;
+using namespace std;
+
 
 World::World() : mp_axes_mesh(NULL) {}
 
@@ -26,6 +34,11 @@ void World::addThing(Thing* t) {
 void World::drawAll() {
 	for ( int i = 0; i < m_things.size(); i++ )
 		m_things[i]->draw();
+}
+
+void World::moveAll(){
+	for(int i = 0; i < m_things.size(); i++)
+		m_things[i]->move();
 }
 
 void World::drawAxes() {

@@ -8,9 +8,8 @@
 class World; //Can't include World.h cus there's a circular dependency
 
 class Thing {
-	public:
+	public: 
 		Thing(Mesh*);
-		void* operator new(size_t);
 		void draw();
 		//Getter and setter functions
 		void setWorld(World* w) { m_world = w; }
@@ -25,8 +24,9 @@ class Thing {
 		void setIdentity();
 		void pushMatrix();
 		void popMatrix();
+		virtual void move() {};//only bullet will actually implement this
 	protected:
-		Mesh* mp_mesh;
+		Mesh* m_mesh;
 		Angel::mat4 m_transformation;
 	private:
 		std::stack<Angel::mat4> m_transformation_stack;

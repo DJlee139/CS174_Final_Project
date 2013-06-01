@@ -27,8 +27,8 @@ void main()
         L = normalize(fL);
         H = normalize(L + V);
     
-        vec4 ambient = 0.5*fColor;
-        vec4 diffuse = max(dot(L,N),0.0)*0.5*fColor*vec4(1,1,1,1);
+        vec4 ambient = 0.2*fColor;
+        vec4 diffuse = max(dot(L,N),0.0)*0.5*fColor*vec4(1,1,0,1);
         vec4 specular = pow(max(dot(N,H),0.0),20.0)*0.5*vec4(1.0,1.0,1.0,1.0);
         if(dot(L,N) < 0.0){
             specular = vec4(0.0,0.0,0.0,1.0);

@@ -2,6 +2,7 @@
 #define __ANGEL_MAT_H__
 
 #include "vec.h"
+#include <stdio.h>
 using namespace Angel;
 
 namespace Angel {

@@ -2,7 +2,14 @@
 #define WORLD_HEADER
 
 #include <vector>
-#include <GLUT/glut.h>
+#ifdef __APPLE__  // include Mac OS X verions of headers
+#  include <OpenGL/OpenGL.h>
+#  include <GLUT/glut.h>
+#else // non-Mac OS X operating systems
+#  include <GL/glew.h>
+#  include <GL/freeglut.h>
+#  include <GL/freeglut_ext.h>
+#endif  // __APPLE__
 
 #include "Thing.h"
 class Mesh;
@@ -14,6 +21,7 @@ class World {
 		void addThing(Thing*);
 		void drawAll();
 		void drawAxes();
+		void moveAll();
 		//Getter functions
 		GLuint getShaderz() { return m_program; }
 	private:

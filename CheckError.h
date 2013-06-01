@@ -9,11 +9,11 @@
 
 #include <stdio.h>
 
-#ifdef WIN32
-#include <GL/gl.h>
-#else
-#include <OpenGL/gl.h>
-#endif
+#ifdef __APPLE__  // include Mac OS X verions of headers
+#  include <OpenGL/OpenGL.h>
+#else // non-Mac OS X operating systems
+#  include <GL/gl.h>
+#endif  // __APPLE__
 
 //----------------------------------------------------------------------------
 
