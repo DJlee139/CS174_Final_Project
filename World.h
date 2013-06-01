@@ -25,7 +25,7 @@ class World {
 		void addBullet(Bullet*);
 		void addWall(Wall*);
 		void addCircle(Circle*);
-		void add
+		void removeBullet(Bullet*);
 		void drawAll();
 		void drawAxes();
 		void moveAll();

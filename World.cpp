@@ -12,6 +12,9 @@
 #include "Thing.h"
 #include "MeshMakers.h"
 #include "Angel.h"
+#include "Bullet.h"
+#include "Wall.h"
+#include "Circle.h"
 using namespace Angel;
 using namespace std;
 
@@ -33,7 +36,7 @@ void World::addThing(Thing* t) {
 
 void World::addBullet(Bullet* b) {
 	b->setWorld(this);
-	m_bullets.push_back(t);
+	m_bullets.push_back(b);
 }
 
 void World::addWall(Wall* w) {
@@ -44,6 +47,11 @@ void World::addWall(Wall* w) {
 void World::addCircle(Circle* c) {
 	c->setWorld(this);
 	m_circles.push_back(c);
+}
+
+void World::removeBullet(Bullet* b) {
+	//This janky line just removes all Bullet pointers equal to b from m_bullets
+	m_bullets.erase(remove(m_bullets.begin(), m_bullets.end(), b), m_bullets.end());
 }
 
 void World::drawAll() {
