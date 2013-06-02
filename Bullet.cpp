@@ -8,13 +8,17 @@ extern World g_timmy;
 //  Degrees-to-radians constant 
 //const GLfloat  cg_DEG2RAD = GLfloat(M_PI) / 180.0f;
 
-const double cg_VELOCITY = 1.0;
+Bullet::	~Bullet() {
+	g_timmy.removeBullet(this);
+	std::cout << "Destroying Bullet " << this << std::endl;
+}
 
 Bullet::Bullet(vec4 coord, double tilt, double yaw) : m_coord(coord) {
 
 	translate(m_coord.first3());	
 	
-	m_velocity = cg_VELOCITY;
+	m_ttl = S_TTL_DEFAULT;
+	m_velocity = S_VELOCITY;
 	m_yaw = yaw;
 	m_tilt = tilt;
 	//set vector components
@@ -31,7 +35,12 @@ void Bullet::step(double dtime){
 	m_coord.z -= m_zdelta;//+
 	translate(m_coord.first3());//use the method from grandparent class to change the matrix
 	
-	//TODO Also update its ttl so it can die if it's too old.
+	//Now update the bullet's TTL based on the time interval that's being passed in. If it's too old,
+	//destroy it
+	m_ttl -= dtime;
+	if ( m_ttl < 0 )
+		delete this; //~Bullet() will be called to clean up
+	
 	//TODO maybe think about implementing gravity
 }
 
@@ -41,7 +50,6 @@ void Bullet::step(double dtime){
 vec4 Bullet::getCoordinate() { return m_coord; } 
 
 void Bullet::splash(Wall* w) {
-	g_timmy.removeBullet(this);
 	Circle* p_splatter = new Circle;
 	g_timmy.add(p_splatter);
 	p_splatter->setColor(vec4(1,0,0,1));

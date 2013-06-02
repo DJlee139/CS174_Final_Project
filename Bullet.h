@@ -17,7 +17,7 @@ class Wall;
 class Bullet:  public Sphere {
 
 public:
-
+	~Bullet();
 	Bullet(vec4 coord, double tilt, double yaw);
 	virtual void step(double);
 	vec4 getCoordinate();
@@ -29,6 +29,10 @@ private:
 	double m_xdelta, m_ydelta, m_zdelta;
 	double m_yaw, m_tilt;
 	double m_velocity;
+	double m_ttl;
+	static const double S_VELOCITY = 1.0;
+	static const double S_TTL_DEFAULT = 10;
+
 };
 
 #endif
