@@ -21,10 +21,10 @@ class World {
 	public:
 		World(); //Only needed to set a pointer to NULL.
 		void linkProgram();
-		void addThing(Thing*);
-		void addBullet(Bullet*);
-		void addWall(Wall*);
-		void addCircle(Circle*);
+		void add(Thing*);
+		void add(Bullet*);
+		void add(Wall*);
+		void add(Circle*);
 		void removeBullet(Bullet*);
 		void drawAll();
 		void drawAxes();

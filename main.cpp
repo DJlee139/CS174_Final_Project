@@ -18,12 +18,6 @@
 #include "Bullet.h"
 using namespace Angel;
 
-
-//TEST for bullets:
-
-
-
-
 // Constants ---------------------------------------------------------------------------------------
 int g_window_width = 1200;
 int g_window_height = 900;
@@ -90,9 +84,9 @@ void initScene(){
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.
 	
-	g_timmy.addThing(im_a_sphere);
-	g_timmy.addThing((Thing*)im_a_circle);
-	g_timmy.addThing((Thing*)back_wall);
+	g_timmy.add(im_a_sphere);
+	g_timmy.add(im_a_circle);
+	g_timmy.add(back_wall);
 }
 
 void drawScene(){
@@ -131,12 +125,10 @@ void keyboard(unsigned char key, int x, int y){
 			break;
 		//Now some cases for dealing with camera movement:
 		case ' ':
-			
 			//bullets[iter] = new Bullet(-g_pentax.getPosition(), g_pentax.getTilt(), g_pentax.getYaw());
 			//std::cout << x.x + " " + x.y + " " + x.z + "\n";
-			g_timmy.addThing((Thing*) new Bullet(-g_pentax.getPosition(), g_pentax.getTilt(), g_pentax.getYaw()));//(Thing*)bullets[iter++]);
+			g_timmy.add(new Bullet(-g_pentax.getPosition(), g_pentax.getTilt(), g_pentax.getYaw()));//(Thing*)bullets[iter++]);
 			break;
-			
 		case 'j':
 			g_pentax.moveLeft();
 			break;

@@ -33,12 +33,14 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
 
     glBindVertexArrayAPPLE(m_vao);
 
+	//Get the locations of all the shader uniforms ready so we can use them later
 	GLuint camera_position = glGetUniformLocation(g_timmy.getShaderz(), "cameraPosition");
     GLuint light_position = glGetUniformLocation(g_timmy.getShaderz(), "lightPosition");
 	GLuint color = glGetUniformLocation(g_timmy.getShaderz(), "Color");
     GLuint object2world = glGetUniformLocation(g_timmy.getShaderz(), "wMo");
     GLuint world2camera = glGetUniformLocation(g_timmy.getShaderz(), "cMw"); 
 	GLuint projection = glGetUniformLocation(g_timmy.getShaderz(), "proj");
+	GLuint specular_highlights = glGetUniformLocation(g_timmy.getShaderz(), "specularHighlights");
 
     //This is Angel::Perspective, which is found in mat.h; not Util::Perspective. It's the same.
     proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );

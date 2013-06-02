@@ -18,7 +18,6 @@
 using namespace Angel;
 using namespace std;
 
-
 World::World() : mp_axes_mesh(NULL) {}
 
 void World::linkProgram() {
@@ -26,7 +25,8 @@ void World::linkProgram() {
 	glUseProgram(m_program);
 }
 
-void World::addThing(Thing* t) {
+void World::add(Thing* t) {
+	//TODO Maybe delete this if we stop having generic Things be in our scene.
 	/* Each Thing has a pointer to the world it's in. Set that, then push to
 	m_things, which will actually make a copy of it. So gotta make all changes
 	before that. */
@@ -34,17 +34,17 @@ void World::addThing(Thing* t) {
 	m_things.push_back(t);
 }
 
-void World::addBullet(Bullet* b) {
+void World::add(Bullet* b) {
 	b->setWorld(this);
 	m_bullets.push_back(b);
 }
 
-void World::addWall(Wall* w) {
+void World::add(Wall* w) {
 	w->setWorld(this);
 	m_walls.push_back(w);
 }
 
-void World::addCircle(Circle* c) {
+void World::add(Circle* c) {
 	c->setWorld(this);
 	m_circles.push_back(c);
 }
@@ -55,11 +55,23 @@ void World::removeBullet(Bullet* b) {
 }
 
 void World::drawAll() {
-	for ( int i = 0; i < m_things.size(); i++ )
+	for ( int i = 0; i < m_bullets.size(); i++ )
+		m_bullets[i]->draw();
+	for ( int i = 0; i < m_walls.size(); i++ )
+		m_walls[i]->draw();
+	for ( int i = 0; i < m_circles.size(); i++ )
+		m_circles[i]->draw();
+	for(int i = 0; i < m_things.size(); i++)
 		m_things[i]->draw();
 }
 
 void World::moveAll(){
+	for ( int i = 0; i < m_bullets.size(); i++ )
+		m_bullets[i]->move();
+	for ( int i = 0; i < m_walls.size(); i++ )
+		m_walls[i]->move();
+	for ( int i = 0; i < m_circles.size(); i++ )
+		m_circles[i]->move();
 	for(int i = 0; i < m_things.size(); i++)
 		m_things[i]->move();
 }
