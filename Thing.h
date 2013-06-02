@@ -10,7 +10,9 @@ class World; //Can't include World.h cus there's a circular dependency
 class Thing {
 	public: 
 		Thing(Mesh*);
+		Thing(Mesh*, vec4, vec3);
 		void draw();
+		void attachTo(Thing&);
 		//Getter and setter functions
 		void setWorld(World* w) { m_world = w; }
 		void setColor(const Angel::vec4& c) { m_color = c; }
@@ -27,6 +29,8 @@ class Thing {
 		virtual void step(double dtime) {};//not everything will actually implement this
 	protected:
 		Mesh* m_mesh;
+		Angel::vec4 m_center;
+		Angel::vec3 m_scale;
 		Angel::mat4 m_transformation;
 		World* m_world;
 	private:

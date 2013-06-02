@@ -50,11 +50,13 @@ void Bullet::step(double dtime){
 vec4 Bullet::getCoordinate() { return m_coord; } 
 
 void Bullet::splash(Wall* w) {
+	//The paint splatter is a circle. 
 	Circle* p_splatter = new Circle;
 	g_timmy.add(p_splatter);
-	p_splatter->setColor(vec4(1,0,0,1));
+	p_splatter->setColor(vec4(0,0,0,1)); //Black
 	//Maybe try and see if just setting its coord will be good enough; kinda weird to attach
-	p_splatter->translate(m_coord.first3());
+	p_splatter->translate(m_coord.first3()); //Just put the Bullet at the exact place we're at
+	p_splatter->scale(4); //We want them to be significantly bigger than unit area.
 //	p_splatter->attachTo((Thing2D&)(*w));
 	//IF we attached to the Wall, would need to scale by 0.05
 	delete this;

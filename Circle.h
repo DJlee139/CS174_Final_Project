@@ -1,9 +1,9 @@
 #ifndef CIRCLE_HEADER
 #define CIRCLE_HEADER
 
-#include "Thing2D.h"
+#include "Thing.h"
 
-class Circle : public Thing2D {
+class Circle : public Thing {
 	public:
 		Circle();
 };

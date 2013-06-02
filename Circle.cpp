@@ -1,7 +1,7 @@
 #include "Circle.h"
-#include "Thing2D.h"
+#include "Thing.h"
 class Mesh;
 
 extern Mesh* gp_circle_mesh;
 
-Circle::Circle() : Thing2D(gp_circle_mesh) {}
+Circle::Circle() : Thing(gp_circle_mesh) {}

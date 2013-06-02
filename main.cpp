@@ -9,7 +9,6 @@
 #include "Mesh.h"
 #include "Cube.h"
 #include "Thing.h"
-#include "Thing2D.h"
 #include "Sphere.h"
 #include "Wall.h"
 #include "Circle.h"
@@ -73,13 +72,13 @@ void initScene(){
 	im_a_sphere->translate(vec3(-7,0,0));
 	im_a_sphere->scale(3.5);
 
-	Thing2D* im_a_circle = new Circle();
+	Thing* im_a_circle = new Circle();
 	im_a_circle->setColor(vec4(0,0,1,1));
 	im_a_circle->translate(vec3(2,2,0));
 
-	Thing2D* back_wall = new Wall();
-	back_wall->translate(vec3(-1,-1,0)); //Get it centered at the origin
-	back_wall->scale(40); //Make it bigger!
+	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 30.0);
+//	back_wall->translate(); //Get it centered at the origin
+//	back_wall->scale(40); //Make it bigger!
 	
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.

@@ -9,8 +9,19 @@ Thing::Thing(Mesh* m) : m_mesh(m) {
 	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
+Thing::Thing(Mesh* m, vec4 center, vec3 scale) : m_mesh(m), m_center(center), m_scale(scale) {
+	m_transformation = identity();
+	m_color = vec4(1,1,1,1);
+}
+
 void Thing::draw() {
 	m_mesh->draw(m_transformation, m_color);
+}
+
+void Thing::attachTo(Thing& other) {
+	/* this function sounds super-sophisticated, but really it just sets the two Things' transformation
+	matrices equal. This can be used for putting a Circle on a Wall or something like that.*/
+	m_transformation = other.m_transformation;
 }
 
 //All the transformation functions
@@ -33,7 +44,7 @@ void Thing::translate(const vec3& a_translation){
 }
 
 void Thing::scale(const vec3& a_scale){
-	m_transformation *Scale(a_scale);
+	m_transformation *= Scale(a_scale);
 }
 
 void Thing::scale(const double a_scale){
