@@ -24,7 +24,7 @@ class Thing {
 		void setIdentity();
 		void pushMatrix();
 		void popMatrix();
-		virtual void move() {};//not everything will actually implement this
+		virtual void step(double dtime) {};//not everything will actually implement this
 	protected:
 		Mesh* m_mesh;
 		Angel::mat4 m_transformation;

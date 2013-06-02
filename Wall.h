@@ -7,7 +7,7 @@
 class Wall : public Thing2D {
 	public:
 		Wall();
-		virtual void move();
+		virtual void step(double);
 		bool checkCollision(vec4);
 };
 

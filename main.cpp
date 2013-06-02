@@ -101,7 +101,7 @@ void drawScene(){
 			bullets[i]->move();
 		}
 	}*/
-	g_timmy.moveAll();
+	g_timmy.stepAll(DTIME);
 	g_pentax.update(DTIME);
 	
 	//Now tell the World object to draw all its Things.

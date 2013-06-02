@@ -49,6 +49,7 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
  
     glUniformMatrix4fv( object2world , 1, true, wMo );
     glUniformMatrix4fv( world2camera, 1, true, cMw);
+    glUniform1i(specular_highlights, false); //We really don't want this stuff to be shiny.
     glUniformMatrix4fv( projection, 1, true, proj);
 	glUniform4fv(camera_position, 1, g_pentax.getPosition());
     glUniform4fv(light_position, 1, g_lumia.getPosition());

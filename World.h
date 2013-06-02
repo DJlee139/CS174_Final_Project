@@ -28,7 +28,7 @@ class World {
 		void removeBullet(Bullet*);
 		void drawAll();
 		void drawAxes();
-		void moveAll();
+		void stepAll(double);
 		//Getter functions
 		GLuint getShaderz() { return m_program; }
 		std::vector<Bullet*>* getBulletList() { return &m_bullets; }

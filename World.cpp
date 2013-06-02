@@ -65,15 +65,15 @@ void World::drawAll() {
 		m_things[i]->draw();
 }
 
-void World::moveAll(){
+void World::stepAll(double dtime){
 	for ( int i = 0; i < m_bullets.size(); i++ )
-		m_bullets[i]->move();
+		m_bullets[i]->step(dtime);
 	for ( int i = 0; i < m_walls.size(); i++ )
-		m_walls[i]->move();
+		m_walls[i]->step(dtime);
 	for ( int i = 0; i < m_circles.size(); i++ )
-		m_circles[i]->move();
+		m_circles[i]->step(dtime);
 	for(int i = 0; i < m_things.size(); i++)
-		m_things[i]->move();
+		m_things[i]->step(dtime);
 }
 
 void World::drawAxes() {
