@@ -6,6 +6,7 @@ varying vec3 fL;
 varying vec3 fV;
 uniform int renderType; //Apparently uniforms are ok in frag shaders, too!
 uniform bool flipNormals;
+uniform bool specularHighlights;
 
 const int GOURARD = 1;
 const int PHONG = 2;
@@ -29,7 +30,10 @@ void main()
     
         vec4 ambient = 0.2*fColor;
         vec4 diffuse = max(dot(L,N),0.0)*0.5*fColor*vec4(1,1,0,1);
-        vec4 specular = pow(max(dot(N,H),0.0),20.0)*0.5*vec4(1.0,1.0,1.0,1.0);
+        vec4 specular = specularHighlights ?
+        	pow(max(dot(N,H),0.0),20.0)*0.5*vec4(1.0,1.0,1.0,1.0)
+        	:
+        	vec4(0,0,0,1);
         if(dot(L,N) < 0.0){
             specular = vec4(0.0,0.0,0.0,1.0);
         }
