@@ -67,18 +67,13 @@ void initScene(){
 	
 	initGeometry();
 	
-	Thing* im_a_sphere = new Sphere();
+	Thing* im_a_sphere = new Sphere(vec4(-7,0,0,1), vec3(3.5, 3.5, 3.5));
 	im_a_sphere->setColor(vec4(0,1,0,1));
-	im_a_sphere->translate(vec3(-7,0,0));
-	im_a_sphere->scale(3.5);
 
-	Thing* im_a_circle = new Circle();
+	Thing* im_a_circle = new Circle(vec4(2,2,0,1), 1);
 	im_a_circle->setColor(vec4(0,0,1,1));
-	im_a_circle->translate(vec3(2,2,0));
 
 	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 30, 10);
-//	back_wall->translate(); //Get it centered at the origin
-//	back_wall->scale(40); //Make it bigger!
 	
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.

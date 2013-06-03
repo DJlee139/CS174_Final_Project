@@ -13,6 +13,8 @@ Thing::Thing(Mesh* m, const vec4& center, const vec3& t_scale) :
 m_mesh(m), m_center(center), m_scale(t_scale) {
 	m_transformation = identity();
 	m_color = vec4(1,1,1,1);
+	translate(m_center.first3());	
+	scale(m_scale);
 }
 
 void Thing::draw() {

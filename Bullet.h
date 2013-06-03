@@ -26,8 +26,8 @@ private:
 	double m_xdelta, m_ydelta, m_zdelta;
 	double m_yaw, m_tilt;
 	double m_velocity;
-	double m_ttl;
-	static const double S_VELOCITY = 1.0;
+	double m_time;
+	static const double S_VELOCITY = 0.3;
 	static const double S_TTL_DEFAULT = 10;
 
 };

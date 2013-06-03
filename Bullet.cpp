@@ -5,6 +5,8 @@ using namespace Angel;
 
 extern World g_timmy;
 
+const double GRAVITY = 0.1;
+
 //  Degrees-to-radians constant 
 //const GLfloat  cg_DEG2RAD = GLfloat(M_PI) / 180.0f;
 
@@ -15,10 +17,8 @@ Bullet::	~Bullet() {
 
 Bullet::Bullet(vec4 coord, double tilt, double yaw) : 
 	Sphere(coord, 1) { //Center it at the coords we're passing in; don't scale for now.
-
-	translate(m_center.first3());	
 	
-	m_ttl = S_TTL_DEFAULT;
+	m_time = 0;
 	m_velocity = S_VELOCITY;
 	m_yaw = yaw;
 	m_tilt = tilt;
@@ -31,33 +31,25 @@ Bullet::Bullet(vec4 coord, double tilt, double yaw) :
 
 
 void Bullet::step(double dtime){
+	/* Now update the bullet's time alive based on the time interval that's being passed in.
+	If it's too old, destroy it. Otherwise, move it, keeping gravity in mind. */
+	m_time += dtime;
+	if ( m_time > S_TTL_DEFAULT )
+		delete this; //~Bullet() will be called to clean up
+		
 	m_center.x += m_xdelta;//-
-	m_center.y -= m_ydelta;//+
+	m_center.y -= m_ydelta + m_time*GRAVITY;//+
 	m_center.z -= m_zdelta;//+
 	translate(m_center.first3());//use the method from grandparent class to change the matrix
-	
-	//Now update the bullet's TTL based on the time interval that's being passed in. If it's too old,
-	//destroy it
-	m_ttl -= dtime;
-	if ( m_ttl < 0 )
-		delete this; //~Bullet() will be called to clean up
-	
-	//TODO maybe think about implementing gravity
 }
-
 
 //crash detection can  use Thing::getCenter and check for collision externally
 //if crash detected, call splash()
-
 void Bullet::splash(Wall* w) {
-	//The paint splatter is a circle. 
-	Circle* p_splatter = new Circle;
+	//The paint splatter is a circle. Just create it at the exact location of the Bullet and make it bigger.
+	Circle* p_splatter = new Circle(m_center, 3.3);
 	g_timmy.add(p_splatter);
 	p_splatter->setColor(vec4(0,0,0,1)); //Black
-	//Maybe try and see if just setting its coord will be good enough; kinda weird to attach
-	p_splatter->translate(m_center.first3()); //Just put the Bullet at the exact place we're at
-	p_splatter->scale(4); //We want them to be significantly bigger than unit area.
-//	p_splatter->attachTo((Thing2D&)(*w));
-	//IF we attached to the Wall, would need to scale by 0.05
+	//The bullet shall now be destroyed. See ~Bullet() for more details about this exciting new offer.
 	delete this;
 }

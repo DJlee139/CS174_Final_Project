@@ -16,8 +16,6 @@ Thing(gp_wall_mesh, center, vec3(x_scale, y_scale, 1)) {
 	/* Thing has all the member variables Wall will need to set its boundary, so just pass them through
 	to the Thing constructor. Just make sure we scale z by something other than 0, even though it's a 
 	2D object. Otherwise it won't have color.*/
-	translate(center.first3());
-	scale(vec3(x_scale, y_scale, 1));
 	setWallBoundary();
 }
 
@@ -33,24 +31,10 @@ void Wall::setWallBoundary(){
 
 }
 
-bool Wall::checkBoundary(vec4 bullet_coord){
-
-	vec3 bcoord;
-	bcoord.x = bullet_coord.x;
-	bcoord.y = bullet_coord.y;
-	bcoord.z = bullet_coord.z;
-	
-	if(bcoord.x <= m_max.x && bcoord.x >= m_min.x){
-		if(bcoord.y <= m_max.y && bcoord.y >= m_min.y){
-			if(bcoord.z <= m_max.z && bcoord.z >= m_min.z){
-				return true;//true = splash the bullet!
-			}
-			else return false;
-		}
-		else return false;
-	}
-	else
-		return false;
+bool Wall::checkBoundary(vec4 bcoord){
+	return (bcoord.x <= m_max.x && bcoord.x >= m_min.x) &&
+		(bcoord.y <= m_max.y && bcoord.y >= m_min.y) && 
+		(bcoord.z <= m_max.z && bcoord.z >= m_min.z);
 }
 
 void Wall::step(double dtime) {
