@@ -61,11 +61,6 @@ void Wall::step(double dtime) {
 	vector<Bullet*>* p_bullets = g_timmy.getBulletList();
 	size_t s = p_bullets->size();
 	for ( size_t i = 0; i < s; i++ )
-		if ( checkCollision((*p_bullets)[i]->getCenter()) )
+		if ( checkBoundary((*p_bullets)[i]->getCenter()) )
 			(*p_bullets)[i]->splash(this);
-}
-
-bool Wall::checkCollision(vec4 c) {
-	//TEMP function until Anvay gets his awesome one in here.
-	return c.z > -1.0 && c.z < 1.0;
 }
