@@ -10,6 +10,7 @@
 #  include <GL/freeglut_ext.h>
 #endif  // __APPLE__
 #include "Angel.h"
+#include <float.h>
 
 #define DRAW_MESH 1
 #define DRAW_PHONG 2
@@ -18,8 +19,10 @@
 class Mesh {
 	public:
 		Mesh(GLuint, int, GLenum);
+		//There are various draw functions depending on how many parameters need to be set.
 		void draw();
 		void draw(const Angel::mat4&, const Angel::vec4&, bool);
+		void draw(const Angel::mat4&, const Angel::vec4&, bool, vec4, vec4);
 	private:
 		GLuint m_vao;
 		int m_num_vertices;

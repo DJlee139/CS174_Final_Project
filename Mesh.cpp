@@ -27,6 +27,11 @@ void Mesh::draw() {
 }
 
 void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out) {
+	//If we don't get any min/max draw values, just draw everything
+	draw(wMo, l_color, white_out, vec4(DBL_MIN), vec4(DBL_MAX));
+}
+
+void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out, vec4 min, vec4 max) {
 
     mat4 cMw;
     mat4 proj;
