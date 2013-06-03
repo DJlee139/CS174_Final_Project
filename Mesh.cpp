@@ -30,8 +30,12 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out) {
 
     mat4 cMw;
     mat4 proj;
-
-    glBindVertexArrayAPPLE(m_vao);
+	
+	#ifdef __APPLE__
+	    glBindVertexArrayAPPLE(m_vao);
+	#else
+		glBindVertexArray(m_vao);
+	#endif
 
 	//Get the locations of all the shader uniforms ready so we can use them later
 	GLuint camera_position = glGetUniformLocation(g_timmy.getShaderz(), "cameraPosition");

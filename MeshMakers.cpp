@@ -23,6 +23,31 @@ const int LOW_COMPLEXITY = 2;
 extern World g_timmy;
 int count; //So it can be used by multiple (recursive) calls to divideTriangle
 
+struct PtrBundle {
+	GLuint vao;
+	GLuint buffer;
+};
+
+GLuint genAndBindVao() {
+	/* A helper function to generate and bind one vertex array*/
+	GLuint vao;
+	#ifdef __APPLE__
+		glGenVertexArraysAPPLE(1, &vao);
+		glBindVertexArrayAPPLE(vao);
+	#else
+		glGenVertexArrays(1, &vao);
+		glBindVertexArray(vao);
+	#endif
+	return vao;
+}
+
+GLuint genAndBindBuffer() {
+	GLuint buffer;
+	glGenBuffers(1, &buffer);
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
+	return buffer;
+}
+
 Mesh* makeCubeMesh() {
 	//This will use my hopefully straightforward and simple algorithm for making a cube.
 	vec4 points[14]; //We'll need 14 total vertices for our method.
@@ -35,13 +60,9 @@ Mesh* makeCubeMesh() {
 	
 	/*Now it's time to start sending these things to the shader. Our final mesh only
 	needs to include a VAO to remember all these things and the number of vertices.*/
-	GLuint vao;
-	glGenVertexArraysAPPLE(1, &vao);
-	glBindVertexArrayAPPLE(vao);
+	GLuint vao = genAndBindVao();
+	GLuint buffer = genAndBindBuffer();
 	
-	GLuint buffer; //We use this buffer only to send data; we don't keep it.
-	glGenBuffers(1, &buffer);
-	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(points)*2, NULL, GL_STATIC_DRAW);
 	glBufferSubData(GL_ARRAY_BUFFER, 0, sizeof(points), points);
 	glBufferSubData(GL_ARRAY_BUFFER, sizeof(points), sizeof(points), points); //normals for now
@@ -112,7 +133,11 @@ void generateSphere(const int complexity, vec4* vertices, vec3* normals){
 
 void sendVerticesAndNormals(vec4* vertices, const int size_v, vec3* normals, const int size_n, GLuint vao, GLuint buffer) {
 	//Gotta bind before we can send anything to the GPU
-	glBindVertexArrayAPPLE(vao);
+	#ifdef __APPLE__
+		glBindVertexArrayAPPLE(vao);
+	#else
+		glBindVertexArray(vao);
+	#endif
     glBindBuffer(GL_ARRAY_BUFFER, buffer);
     //Send data from CPU to GPU. They're all the same size.
     glBufferData(GL_ARRAY_BUFFER, size_v + size_n, NULL, GL_STATIC_DRAW);
@@ -138,10 +163,8 @@ Mesh* makeSphereMesh(const int complexity) {
 	generateSphere(complexity, vertices, normals);
 	
     //Create the Vertex Array and Buffer.
-    GLuint vao, buffer;
-    glGenVertexArraysAPPLE(1, &vao);
-    glBindVertexArrayAPPLE(vao);
-    glGenBuffers(1, &buffer);
+	GLuint vao = genAndBindVao();
+	GLuint buffer = genAndBindBuffer();
 
 	//Now since each of 48 vectors is 4 floats, sizeof(vertices) == 192.
 	sendVerticesAndNormals(vertices, sizeof(vertices), normals, sizeof(normals), vao, buffer);
@@ -165,11 +188,9 @@ Mesh* makeCircleMesh() {
     divideTriangle(vertices, normals, v[0], v[1], v[2], complexity);
 	
 	//Create the Vertex Array and Buffer.
-    GLuint vao, buffer;
-    glGenVertexArraysAPPLE(1, &vao);
-    glBindVertexArrayAPPLE(vao);
-    glGenBuffers(1, &buffer);
-
+	GLuint vao = genAndBindVao();
+	GLuint buffer = genAndBindBuffer();
+   
 	sendVerticesAndNormals(vertices, sizeof(vertices), normals, sizeof(normals), vao, buffer);
 	return new Mesh(vao, num_vert, GL_TRIANGLES);
 }
@@ -178,10 +199,8 @@ Mesh* makeWallMesh() {
 	vec4 vertices[] = {V(-0.5,0.5,0), V(0.5,0.5,0), V(-0.5,-0.5,0), V(0.5,-0.5,0)};
 	vec3 normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
 	
-	GLuint vao, buffer;
-	glGenVertexArraysAPPLE(1, &vao);
-	glBindVertexArrayAPPLE(vao);
-	glGenBuffers(1, &buffer);
+	GLuint vao = genAndBindVao();
+	GLuint buffer = genAndBindBuffer();
 	
 	//Try using this function to send stuff for all the meshes.
 	sendVerticesAndNormals(vertices, sizeof(vertices), normals, sizeof(normals), vao, buffer);
@@ -194,10 +213,8 @@ Mesh* makeAxesMesh() {
 	vec3 normals[] = {N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1), N(0,0,1)};
 	//All normals should probly be pointing in the +Z-direction right now, since the light is there.
 	
-	GLuint vao, buffer;
-	glGenVertexArraysAPPLE(1, &vao);
-	glBindVertexArrayAPPLE(vao);
-	glGenBuffers(1, &buffer);
+	GLuint vao = genAndBindVao();
+	GLuint buffer = genAndBindBuffer();
 	
 	sendVerticesAndNormals(vertices, sizeof(vertices), normals, sizeof(normals), vao, buffer);
 	return new Mesh(vao, 6, GL_LINES);

@@ -17,7 +17,7 @@ Bullet::	~Bullet() {
 
 Bullet::Bullet(vec4 coord, double tilt, double yaw) :
 //Center it at the coords we're passing in; 1 is a good size for Bullets.
-Sphere(coord, 1), m_ttl(10), m_velocity(0.4)  {
+Sphere(coord, 1), m_ttl(10), m_velocity(0.58)  {
 	
 	m_time = 0;
 	m_yaw = yaw;
