@@ -13,6 +13,9 @@ const int GOURARD = 1;
 const int PHONG = 2;
 const int FLAT_SHADING = 3;
 
+uniform vec4 drawMin;
+uniform vec4 drawMax;
+
 void main()
 {
    // int renderType = 1; //The old way

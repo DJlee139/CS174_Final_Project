@@ -23,17 +23,6 @@ extern int g_draw_type;
 Mesh::Mesh(GLuint vao, int num_vertices, GLenum draw_mode) :
 	m_vao(vao), m_num_vertices(num_vertices), m_draw_mode(draw_mode) {}
 
-/*
-void Mesh::draw() {
-	draw(Angel::identity(), vec4(1,1,1,1), false);
-}
-
-void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out) {
-	//If we don't get any min/max draw values, just draw everything
-	draw(wMo, l_color, white_out, vec4(DBL_MIN), vec4(DBL_MAX));
-}
-*/
-
 void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out, vec4 min, vec4 max) {
 
     mat4 cMw;
@@ -54,6 +43,8 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out, vec4 min, 
 	GLuint projection = glGetUniformLocation(g_timmy.getShaderz(), "proj");
 	GLuint specular_highlights = glGetUniformLocation(g_timmy.getShaderz(), "specularHighlights");
 	GLuint white_out_uniform = glGetUniformLocation(g_timmy.getShaderz(), "whiteOut");
+	GLuint draw_min = glGetUniformLocation(g_timmy.getShaderz(), "drawMin");
+	GLuint draw_max = glGetUniformLocation(g_timmy.getShaderz(), "drawMax");
 
     //This is Angel::Perspective, which is found in mat.h; not Util::Perspective. It's the same.
     proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
@@ -68,6 +59,8 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out, vec4 min, 
 	glUniform4fv(camera_position, 1, g_pentax.getPosition());
     glUniform4fv(light_position, 1, g_lumia.getPosition());
   	glUniform4fv(color,1,l_color);
+  	glUniform4fv(draw_min, 1, min);
+  	glUniform4fv(draw_max, 1, max);
 	
 	switch (g_draw_type) {
         case DRAW_MESH:

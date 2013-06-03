@@ -11,7 +11,7 @@ class Thing {
 	public: 
 		Thing(Mesh*);
 		Thing(Mesh*, const vec4&, const vec3&);
-		void draw();
+		virtual void draw(const vec4& = vec4(-100000), const vec4& = vec4(100000));
 		void attachTo(Thing&);
 		//Getter and setter functions
 		void setWorld(World* w) { m_world = w; }

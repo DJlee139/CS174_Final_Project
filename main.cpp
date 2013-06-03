@@ -54,6 +54,105 @@ void initScene(){
 	
 	initGeometry();
 	
+	int w1x = (rand() % 99 + 1)-50; //random coordinate -49<=x<=49
+	int w1y = (rand() % 99 + 1)-50; //-49<=y<=49
+	int w2x = (rand() % 99 + 1)-50;
+	int w2y = (rand() % 99 + 1)-50;
+	int w3x = (rand() % 99 + 1)-50;
+	int w3y = (rand() % 99 + 1)-50;
+	int w4x = (rand() % 99 + 1)-50;
+	int w4y = (rand() % 99 + 1)-50;
+	int w5x = (rand() % 99 + 1)-50;
+	int w5y = (rand() % 99 + 1)-50;
+	int w6x = (rand() % 99 + 1)-50;
+	int w6y = (rand() % 99 + 1)-50;
+	int w7x = (rand() % 99 + 1)-50;
+	int w7y = (rand() % 99 + 1)-50;
+	int w8x = (rand() % 99 + 1)-50;
+	int w8y = (rand() % 99 + 1)-50;
+
+	Wall* wall1d = new Wall(vec4(0,(-50-10+w1y)/2,30,1), 100, 40+w1y);
+	Wall* wall1l = new Wall(vec4((-50-10+w1x)/2,0,30,1), 40+w1x, 100);
+	Wall* wall1u = new Wall(vec4(0,(50+10+w1y)/2,30,1), 100, 40-w1y);
+	Wall* wall1r = new Wall(vec4((50+10+w1x)/2,0,30,1), 40-w1x, 100);
+
+	Wall* wall2d = new Wall(vec4(0,(-50-10+w2y)/2,60,1), 100, 40+w2y);
+	Wall* wall2l = new Wall(vec4((-50-10+w2x)/2,0,60,1), 40+w2x, 100);
+	Wall* wall2u = new Wall(vec4(0,(50+10+w2y)/2,60,1), 100, 40-w2y);
+	Wall* wall2r = new Wall(vec4((50+10+w2x)/2,0,60,1), 40-w2x, 100);
+
+	Wall* wall3d = new Wall(vec4(0,(-50-10+w3y)/2,90,1), 100, 40+w3y);
+	Wall* wall3l = new Wall(vec4((-50-10+w3x)/2,0,90,1), 40+w3x, 100);
+	Wall* wall3u = new Wall(vec4(0,(50+10+w3y)/2,90,1), 100, 40-w3y);
+	Wall* wall3r = new Wall(vec4((50+10+w3x)/2,0,90,1), 40-w3x, 100);
+
+	Wall* wall4d = new Wall(vec4(0,(-50-10+w4y)/2,120,1), 100, 40+w4y);
+	Wall* wall4l = new Wall(vec4((-50-10+w4x)/2,0,120,1), 40+w4x, 100);
+	Wall* wall4u = new Wall(vec4(0,(50+10+w4y)/2,120,1), 100, 40-w4y);
+	Wall* wall4r = new Wall(vec4((50+10+w4x)/2,0,120,1), 40-w4x, 100);
+
+	Wall* wall5d = new Wall(vec4(0,(-50-10+w5y)/2,150,1), 100, 40+w5y);
+	Wall* wall5l = new Wall(vec4((-50-10+w5x)/2,0,150,1), 40+w5x, 100);
+	Wall* wall5u = new Wall(vec4(0,(50+10+w5y)/2,150,1), 100, 40-w5y);
+	Wall* wall5r = new Wall(vec4((50+10+w5x)/2,0,150,1), 40-w5x, 100);
+
+	Wall* wall6d = new Wall(vec4(0,(-50-10+w6y)/2,180,1), 100, 40+w6y);
+	Wall* wall6l = new Wall(vec4((-50-10+w6x)/2,0,180,1), 40+w6x, 100);
+	Wall* wall6u = new Wall(vec4(0,(50+10+w6y)/2,180,1), 100, 40-w6y);
+	Wall* wall6r = new Wall(vec4((50+10+w6x)/2,0,180,1), 40-w6x, 100);
+
+	Wall* wall7d = new Wall(vec4(0,(-50-10+w7y)/2,210,1), 100, 40+w7y);
+	Wall* wall7l = new Wall(vec4((-50-10+w7x)/2,0,210,1), 40+w7x, 100);
+	Wall* wall7u = new Wall(vec4(0,(50+10+w7y)/2,210,1), 100, 40-w7y);
+	Wall* wall7r = new Wall(vec4((50+10+w7x)/2,0,210,1), 40-w7x, 100);
+
+	Wall* wall8d = new Wall(vec4(0,(-50-10+w8y)/2,240,1), 100, 40+w8y);
+	Wall* wall8l = new Wall(vec4((-50-10+w8x)/2,0,240,1), 40+w8x, 100);
+	Wall* wall8u = new Wall(vec4(0,(50+10+w8y)/2,240,1), 100, 40-w8y);
+	Wall* wall8r = new Wall(vec4((50+10+w8x)/2,0,240,1), 40-w8x, 100);
+	
+	g_timmy.add(wall1d);
+	g_timmy.add(wall1l);
+	g_timmy.add(wall1u);
+	g_timmy.add(wall1r);
+
+	g_timmy.add(wall2d);
+	g_timmy.add(wall2l);
+	g_timmy.add(wall2u);
+	g_timmy.add(wall2r);
+
+	g_timmy.add(wall3d);
+	g_timmy.add(wall3l);
+	g_timmy.add(wall3u);
+	g_timmy.add(wall3r);
+
+	g_timmy.add(wall4d);
+	g_timmy.add(wall4l);
+	g_timmy.add(wall4u);
+	g_timmy.add(wall4r);
+
+	g_timmy.add(wall5d);
+	g_timmy.add(wall5l);
+	g_timmy.add(wall5u);
+	g_timmy.add(wall5r);
+
+	g_timmy.add(wall6d);
+	g_timmy.add(wall6l);
+	g_timmy.add(wall6u);
+	g_timmy.add(wall6r);
+
+	g_timmy.add(wall7d);
+	g_timmy.add(wall7l);
+	g_timmy.add(wall7u);
+	g_timmy.add(wall7r);
+
+	g_timmy.add(wall8d);
+	g_timmy.add(wall8l);
+	g_timmy.add(wall8u);
+	g_timmy.add(wall8r);
+	
+	//OLD STUFF:
+	/*
 	Thing* im_a_sphere = new Sphere(vec4(-7,0,0,1), vec3(3.5, 3.5, 3.5));
 	im_a_sphere->setColor(vec4(0,1,0,1));
 
@@ -68,6 +167,7 @@ void initScene(){
 	g_timmy.add(im_a_sphere);
 	g_timmy.add(im_a_circle);
 	g_timmy.add(back_wall);
+	*/
 }
 
 void drawScene(){

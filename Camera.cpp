@@ -1,5 +1,7 @@
 #include "Camera.h"
 #include "Angel.h"
+#include <iostream>
+using namespace std;
 using namespace Angel;
 
 Camera::Camera(double fovy, double aspect, double znear, double zfar) :
@@ -11,6 +13,7 @@ void Camera::update(double dt) {
 	//recompute the world to camera matrix in the camera
 	m_cMw = RotateX(m_tilt)*RotateY(m_yaw)*Translate(m_xtrans, m_ytrans, m_ztrans);
 	m_position = vec4(m_xtrans, m_ytrans, m_ztrans, 1.0); //will be updated everytime that the scene is about to be drawn
+	cout << m_position << endl;
 }
 
 void Camera::resetView() {
@@ -24,42 +27,39 @@ void Camera::resetView() {
 }
 
 void Camera::moveLeft() {
-	m_xtrans += m_camera_inc*cos(m_yaw*M_PI/180);
-	m_ztrans += m_camera_inc*sin(m_yaw*M_PI/180);
-	//double t_x = m_xtrans- m_camera_inc*cos(m_yaw*M_PI/180);
-	//double t_y = m_ytrans - m_camera_inc*sin(m_yaw*M_PI/180); 
-
-m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
+	if ( m_xtrans <= 50.0 ) {
+		m_xtrans += m_camera_inc*cos(m_yaw*M_PI/180);
+		m_ztrans += m_camera_inc*sin(m_yaw*M_PI/180);
+	}
 }
 
 void Camera::moveRight() {
-	m_xtrans -= m_camera_inc*cos(m_yaw*M_PI/180);
-    m_ztrans -= m_camera_inc*sin(m_yaw*M_PI/180);  
-	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);		
+	if ( m_xtrans >= -50.0 ) {
+		m_xtrans -= m_camera_inc*cos(m_yaw*M_PI/180);
+    	m_ztrans -= m_camera_inc*sin(m_yaw*M_PI/180);  
+    }
  }
 
 
 void Camera::moveUp() { 
+if ( m_ytrans >= -50.0 ) 
 	m_ytrans -= m_camera_inc; 
-	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
 }
 
 
 void Camera::moveDown() { 
+if ( m_ytrans <= 50.0 ) 
 	m_ytrans += m_camera_inc;
-	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
  }
 
 void Camera::moveForward() { 
 	m_xtrans -= m_camera_inc*sin(m_yaw*M_PI/180);
     	m_ztrans += m_camera_inc*cos(m_yaw*M_PI/180);
-	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
  }
 
 void Camera::moveBackward() {
 	m_xtrans += m_camera_inc*sin(m_yaw*M_PI/180);
 	m_ztrans -= m_camera_inc*cos(m_yaw*M_PI/180);
-	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
  }
 
 void Camera::rotateLeft() { m_yaw += S_ROTATE_AMOUNT; }

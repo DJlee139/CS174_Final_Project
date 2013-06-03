@@ -19,10 +19,9 @@
 class Mesh {
 	public:
 		Mesh(GLuint, int, GLenum);
-		//There are various draw functions depending on how many parameters need to be set.
-		//void draw();
-		//void draw(const Angel::mat4&, const Angel::vec4&, bool);
-		void draw(const Angel::mat4& = Angel::identity(), const Angel::vec4& = Angel::vec4(1,1,1,1), bool = false, vec4 = vec4(DBL_MIN), vec4 = vec4(DBL_MAX));
+		//This function has all default parameters. When calling, gotta add from left to right.
+		void draw(const Angel::mat4& = Angel::identity(), const Angel::vec4& = Angel::vec4(1,1,1,1),
+			bool = false, vec4 = vec4(-100000), vec4 = vec4(100000));
 	private:
 		GLuint m_vao;
 		int m_num_vertices;

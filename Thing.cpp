@@ -17,8 +17,8 @@ m_mesh(m), m_center(center), m_scale(t_scale), m_draw_whiteout(false) {
 	scale(m_scale);
 }
 
-void Thing::draw() {
-	m_mesh->draw(m_transformation, m_color, m_draw_whiteout);
+void Thing::draw(const vec4& min, const vec4& max) {
+	m_mesh->draw(m_transformation, m_color, m_draw_whiteout, min, max);
 }
 
 void Thing::attachTo(Thing& other) {
