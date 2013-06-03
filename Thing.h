@@ -34,6 +34,7 @@ class Thing {
 		Angel::vec3 m_scale;
 		Angel::mat4 m_transformation;
 		World* m_world;
+		bool m_draw_whiteout;
 	private:
 		std::stack<Angel::mat4> m_transformation_stack;
 		vec4 m_color;

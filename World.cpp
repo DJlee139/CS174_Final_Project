@@ -79,5 +79,5 @@ void World::stepAll(double dtime){
 void World::drawAxes() {
 	if (mp_axes_mesh == NULL ) //If this hasn't been created yet. Real janky, I know.
 		mp_axes_mesh = makeAxesMesh();
-	mp_axes_mesh->draw(identity(), vec4(1,1,1,1));//white; no transformations
+	mp_axes_mesh->draw(identity(), vec4(1,1,1,1), false);//white; no transformations
 }

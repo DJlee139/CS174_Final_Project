@@ -23,10 +23,10 @@ Mesh::Mesh(GLuint vao, int num_vertices, GLenum draw_mode) :
 	m_vao(vao), m_num_vertices(num_vertices), m_draw_mode(draw_mode) {}
 
 void Mesh::draw() {
-	draw(identity(), vec4(1,1,1,1));
+	draw(identity(), vec4(1,1,1,1), false);
 }
 
-void Mesh::draw(const mat4& wMo, const vec4& l_color) {
+void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out) {
 
     mat4 cMw;
     mat4 proj;
@@ -41,6 +41,7 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
     GLuint world2camera = glGetUniformLocation(g_timmy.getShaderz(), "cMw"); 
 	GLuint projection = glGetUniformLocation(g_timmy.getShaderz(), "proj");
 	GLuint specular_highlights = glGetUniformLocation(g_timmy.getShaderz(), "specularHighlights");
+	GLuint white_out_uniform = glGetUniformLocation(g_timmy.getShaderz(), "whiteOut");
 
     //This is Angel::Perspective, which is found in mat.h; not Util::Perspective. It's the same.
     proj = Perspective( g_pentax.getFovy(), g_pentax.getAspect(), g_pentax.getZnear(), g_pentax.getZfar() );
@@ -50,6 +51,7 @@ void Mesh::draw(const mat4& wMo, const vec4& l_color) {
     glUniformMatrix4fv( object2world , 1, true, wMo );
     glUniformMatrix4fv( world2camera, 1, true, cMw);
     glUniform1i(specular_highlights, false); //We really don't want this stuff to be shiny.
+	glUniform1i(white_out_uniform, white_out); //To make walls invisible and bullets, etc look 3D
     glUniformMatrix4fv( projection, 1, true, proj);
 	glUniform4fv(camera_position, 1, g_pentax.getPosition());
     glUniform4fv(light_position, 1, g_lumia.getPosition());

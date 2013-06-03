@@ -27,8 +27,6 @@ int g_draw_type = DRAW_PHONG;
 double TIME;
 double TIME_LAST;
 double DTIME;
-double FRAME_TIME = 0;
-int FRAME_COUNT = 0;
 double g_rotation;
 
 // Global objects -----------------------------------------------------------------------------------
@@ -62,8 +60,6 @@ void initScene(){
 
     TIME_LAST = g_timer.getElapsedTime() ;
 	DTIME = 0.0;
-	FRAME_TIME = 0.0;
-
 	
 	initGeometry();
 	
@@ -73,7 +69,7 @@ void initScene(){
 	Thing* im_a_circle = new Circle(vec4(2,2,0,1), 1);
 	im_a_circle->setColor(vec4(0,0,1,1));
 
-	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 30, 10);
+	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 36, 38);
 	
 	im_a_circle->attachTo(*back_wall);
 	im_a_circle->scale(0.2); //A much smaller size is appropriate for a paint splatter.
@@ -84,28 +80,15 @@ void initScene(){
 }
 
 void drawScene(){
-   
     glEnable( GL_DEPTH_TEST );
-    glClearColor(0.0, 0.0, 0.0, 0.0);//Black background
+    glClearColor(1,1,1,1);//Black background
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    //move the bullets! this automatically alters their matrices
-	/*for(int i = 0; i < 10; i++)
-	{
-		if(bullets[i] != NULL){
-			bullets[i]->move();
-		}
-	}*/
 	g_timmy.stepAll(DTIME);
 	g_pentax.update(DTIME);
-	
 	//Now tell the World object to draw all its Things.
 	g_timmy.drawAll();
 	g_timmy.drawAxes();
 }
-
-
-
-
 
 void keyboard(unsigned char key, int x, int y){
 
@@ -148,23 +131,10 @@ void keyboard(unsigned char key, int x, int y){
 			g_draw_type = DRAW_PHONG;
 			break;
 	}
-
-
-
-
-
 }
 
-
-
-
-
 void specKeyboardCallback(int key, int x, int y){
-	/* This is a key callback function that accepts the key as an int. You might think most
-	keys are chars, but we want this to be both a keyboard callback and a special
-	callback..... and it turns out that for ASCII keys, int is the same as char! */
 	switch ( key ) {
-		
 		case GLUT_KEY_DOWN:
 			g_pentax.tiltDown();
 			break;
@@ -177,9 +147,7 @@ void specKeyboardCallback(int key, int x, int y){
 		case GLUT_KEY_LEFT:
 			g_pentax.rotateRight();
 			break;
-		
 	}
-
 	glutPostRedisplay();
 }
 
@@ -196,13 +164,9 @@ void reshapeCallback(int w, int h){
     glViewport(0, 0, w, h);
 	g_pentax.setAspect((float)w/(float)h);
 	glutPostRedisplay() ;
-    
 }
 
 void idleCallback(){
-    
-	
-	
 	TIME = g_timer.getElapsedTime() ;
     
 	DTIME = TIME - TIME_LAST;
@@ -210,9 +174,7 @@ void idleCallback(){
 
     g_rotation += DTIME*100;
 
-    //std::cout<<"Frame Rate"<<FRAME_COUNT/TIME<<"\r";
 	glutPostRedisplay(); //draw new frame
-	FRAME_COUNT++;
 }
 
 
@@ -238,5 +200,3 @@ int main() {
     glutMainLoop();
 
 }
-
-

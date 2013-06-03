@@ -17,6 +17,9 @@ Thing(gp_wall_mesh, center, vec3(x_scale, y_scale, 1)) {
 	to the Thing constructor. Just make sure we scale z by something other than 0, even though it's a 
 	2D object. Otherwise it won't have color.*/
 	setWallBoundary();
+	//Tell Thing that when it draws a wall it should have whiteout; that is 100% ambient light so it's
+	//invisible until hit with paint
+	m_draw_whiteout = true;
 }
 
 void Wall::setWallBoundary(){

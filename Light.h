@@ -22,7 +22,6 @@ private:
     Angel::vec4 m_position;
     Angel::vec4 m_color;
     
-    
 };
 
 

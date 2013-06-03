@@ -3,14 +3,14 @@
 #include "World.h"
 using namespace Angel;
 
-Thing::Thing(Mesh* m) : m_mesh(m) {
+Thing::Thing(Mesh* m) : m_mesh(m), m_draw_whiteout(false) {
 	//To build a thing, start by setting its transformation matrix to identity.
 	m_transformation = identity();
 	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
 Thing::Thing(Mesh* m, const vec4& center, const vec3& t_scale) :
-m_mesh(m), m_center(center), m_scale(t_scale) {
+m_mesh(m), m_center(center), m_scale(t_scale), m_draw_whiteout(false) {
 	m_transformation = identity();
 	m_color = vec4(1,1,1,1);
 	translate(m_center.first3());	
@@ -18,7 +18,7 @@ m_mesh(m), m_center(center), m_scale(t_scale) {
 }
 
 void Thing::draw() {
-	m_mesh->draw(m_transformation, m_color);
+	m_mesh->draw(m_transformation, m_color, m_draw_whiteout);
 }
 
 void Thing::attachTo(Thing& other) {

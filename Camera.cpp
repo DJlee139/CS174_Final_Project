@@ -12,7 +12,6 @@ void Camera::init(double fovy, double aspect, double near, double far) {
     m_znear = near;
     m_zfar = far;
 	m_zoom = 1.00; //This is cool; maybe make use of it?
-   //m_position = (S_XTRANS_DEFAULT, S_YTRANS_DEFAULT, S_ZTRANS_DEFAULT, 1.0);
 }
 
 void Camera::update(double dt) {
@@ -43,10 +42,10 @@ m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);
 void Camera::moveRight() {
 	m_xtrans -= m_camera_inc*cos(m_yaw*M_PI/180);
     m_ztrans -= m_camera_inc*sin(m_yaw*M_PI/180);  
-
-m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);		
+	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);		
  }
-//TODO delete these functions eventually
+
+
 void Camera::moveUp() { 
 	m_ytrans -= m_camera_inc; 
 	m_position = (m_xtrans, m_ytrans, m_ztrans, 1.0);

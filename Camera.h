@@ -33,8 +33,8 @@ public:
 	void resetView();
 	void moveLeft();
 	void moveRight();
-	void moveUp(); //TODO delete
-	void moveDown();  //TODO delet
+	void moveUp();
+	void moveDown(); 
 	void moveForward();
 	void moveBackward();
 	void rotateLeft();
@@ -46,7 +46,7 @@ private:
 	    Angel::vec4 m_position;
 	    //Define the perspective division:
 		double m_fovy, m_aspect, m_znear, m_zfar, m_zoom;
-	    //My new variables for camera movement:
+	    //My variables for camera movement:
 		static const double S_XTRANS_DEFAULT = -14; //0
 		static const double S_YTRANS_DEFAULT = -28; //-20;
 		static const double S_ZTRANS_DEFAULT = -64; //-70

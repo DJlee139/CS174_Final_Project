@@ -19,7 +19,7 @@ class Mesh {
 	public:
 		Mesh(GLuint, int, GLenum);
 		void draw();
-		void draw(const Angel::mat4&, const Angel::vec4&);
+		void draw(const Angel::mat4&, const Angel::vec4&, bool);
 	private:
 		GLuint m_vao;
 		int m_num_vertices;
