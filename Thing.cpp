@@ -9,7 +9,8 @@ Thing::Thing(Mesh* m) : m_mesh(m) {
 	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
-Thing::Thing(Mesh* m, vec4 center, vec3 scale) : m_mesh(m), m_center(center), m_scale(scale) {
+Thing::Thing(Mesh* m, const vec4& center, const vec3& t_scale) :
+m_mesh(m), m_center(center), m_scale(t_scale) {
 	m_transformation = identity();
 	m_color = vec4(1,1,1,1);
 }

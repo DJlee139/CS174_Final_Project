@@ -11,21 +11,24 @@ extern World g_timmy;
 
 Wall::Wall() : Thing(gp_wall_mesh) {}
 
-Wall::Wall(vec4 center, double t_scale) : Thing(gp_wall_mesh, center, t_scale) {
-
+Wall::Wall(vec4 center, double x_scale, double y_scale) :
+Thing(gp_wall_mesh, center, vec3(x_scale, y_scale, 1)) {
+	/* Thing has all the member variables Wall will need to set its boundary, so just pass them through
+	to the Thing constructor. Just make sure we scale z by something other than 0, even though it's a 
+	2D object. Otherwise it won't have color.*/
 	translate(center.first3());
-	scale(vec3(t_scale, t_scale, 1));
+	scale(vec3(x_scale, y_scale, 1));
 	setWallBoundary();
 }
 
 void Wall::setWallBoundary(){
 	
-	m_min.x = m_center.x - (m_scale/2);
-	m_min.y = m_center.y - (m_scale/2);
+	m_min.x = m_center.x - (m_scale.x/2);
+	m_min.y = m_center.y - (m_scale.y/2);
 	m_min.z = m_center.z -1;// - (m_scale/2);
 
-	m_max.x = m_center.x + (m_scale/2);
-	m_max.y = m_center.y + (m_scale/2);
+	m_max.x = m_center.x + (m_scale.x/2);
+	m_max.y = m_center.y + (m_scale.y/2);
 	m_max.z = m_center.z+1;// + (m_scale/2);
 
 }
@@ -58,7 +61,7 @@ void Wall::step(double dtime) {
 	vector<Bullet*>* p_bullets = g_timmy.getBulletList();
 	size_t s = p_bullets->size();
 	for ( size_t i = 0; i < s; i++ )
-		if ( checkCollision((*p_bullets)[i]->getCoordinate()) )
+		if ( checkCollision((*p_bullets)[i]->getCenter()) )
 			(*p_bullets)[i]->splash(this);
 }
 

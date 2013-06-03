@@ -13,9 +13,10 @@ Bullet::	~Bullet() {
 	std::cout << "Destroying Bullet " << this << std::endl;
 }
 
-Bullet::Bullet(vec4 coord, double tilt, double yaw) : m_coord(coord) {
+Bullet::Bullet(vec4 coord, double tilt, double yaw) : 
+	Sphere(coord, 1) { //Center it at the coords we're passing in; don't scale for now.
 
-	translate(m_coord.first3());	
+	translate(m_center.first3());	
 	
 	m_ttl = S_TTL_DEFAULT;
 	m_velocity = S_VELOCITY;
@@ -30,10 +31,10 @@ Bullet::Bullet(vec4 coord, double tilt, double yaw) : m_coord(coord) {
 
 
 void Bullet::step(double dtime){
-	m_coord.x += m_xdelta;//-
-	m_coord.y -= m_ydelta;//+
-	m_coord.z -= m_zdelta;//+
-	translate(m_coord.first3());//use the method from grandparent class to change the matrix
+	m_center.x += m_xdelta;//-
+	m_center.y -= m_ydelta;//+
+	m_center.z -= m_zdelta;//+
+	translate(m_center.first3());//use the method from grandparent class to change the matrix
 	
 	//Now update the bullet's TTL based on the time interval that's being passed in. If it's too old,
 	//destroy it
@@ -45,9 +46,8 @@ void Bullet::step(double dtime){
 }
 
 
-//crash detection can  use getCoordinates and check for collision externally
+//crash detection can  use Thing::getCenter and check for collision externally
 //if crash detected, call splash()
-vec4 Bullet::getCoordinate() { return m_coord; } 
 
 void Bullet::splash(Wall* w) {
 	//The paint splatter is a circle. 
@@ -55,7 +55,7 @@ void Bullet::splash(Wall* w) {
 	g_timmy.add(p_splatter);
 	p_splatter->setColor(vec4(0,0,0,1)); //Black
 	//Maybe try and see if just setting its coord will be good enough; kinda weird to attach
-	p_splatter->translate(m_coord.first3()); //Just put the Bullet at the exact place we're at
+	p_splatter->translate(m_center.first3()); //Just put the Bullet at the exact place we're at
 	p_splatter->scale(4); //We want them to be significantly bigger than unit area.
 //	p_splatter->attachTo((Thing2D&)(*w));
 	//IF we attached to the Wall, would need to scale by 0.05

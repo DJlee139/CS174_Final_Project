@@ -6,15 +6,15 @@
 class Wall : public Thing {
 	public:
 		Wall();
-		Wall(Angel::vec4, double);
+		Wall(Angel::vec4, double, double);
 		void setWallBoundary();
 		virtual void step(double);
 		bool checkBoundary(Angel::vec4);//false if NO splash needed, TRUE if splash needed
 		bool checkCollision(Angel::vec4);
 
 	private:
-		Angel::vec4 m_center;
-		double m_scale;
+		//Angel::vec4 m_center;
+		//double m_scale;
 		Angel::vec4 m_min;
 		Angel::vec4 m_max;
 };

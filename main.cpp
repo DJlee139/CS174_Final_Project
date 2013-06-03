@@ -76,7 +76,7 @@ void initScene(){
 	im_a_circle->setColor(vec4(0,0,1,1));
 	im_a_circle->translate(vec3(2,2,0));
 
-	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 30.0);
+	Thing* back_wall = new Wall(vec4(-1,-1,0,1), 30, 10);
 //	back_wall->translate(); //Get it centered at the origin
 //	back_wall->scale(40); //Make it bigger!
 	

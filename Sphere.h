@@ -6,6 +6,7 @@
 class Sphere : public Thing {
 	public:
 		Sphere();
+		Sphere(const Angel::vec4&, const Angel::vec3&);
 };
 
 #endif

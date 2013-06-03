@@ -20,12 +20,9 @@ public:
 	~Bullet();
 	Bullet(vec4 coord, double tilt, double yaw);
 	virtual void step(double);
-	vec4 getCoordinate();
 	void splash(Wall*);
 
 private:
-
-	vec4 m_coord;
 	double m_xdelta, m_ydelta, m_zdelta;
 	double m_yaw, m_tilt;
 	double m_velocity;
