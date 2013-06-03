@@ -11,6 +11,7 @@
 #include "Angel.h"
 #include "Camera.h"
 #include "Light.h"
+#include <float.h>
 
 using namespace Angel;
 

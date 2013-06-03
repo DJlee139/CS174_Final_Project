@@ -10,7 +10,6 @@
 #  include <GL/freeglut_ext.h>
 #endif  // __APPLE__
 #include "Angel.h"
-#include <float.h>
 
 #define DRAW_MESH 1
 #define DRAW_PHONG 2
