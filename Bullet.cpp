@@ -15,11 +15,11 @@ Bullet::	~Bullet() {
 	std::cout << "Destroying Bullet " << this << std::endl;
 }
 
-Bullet::Bullet(vec4 coord, double tilt, double yaw) : 
-	Sphere(coord, 1) { //Center it at the coords we're passing in; don't scale for now.
+Bullet::Bullet(vec4 coord, double tilt, double yaw) :
+//Center it at the coords we're passing in; 1 is a good size for Bullets.
+Sphere(coord, 1), m_ttl(10), m_velocity(0.4)  {
 	
 	m_time = 0;
-	m_velocity = S_VELOCITY;
 	m_yaw = yaw;
 	m_tilt = tilt;
 	//set vector components
@@ -34,7 +34,7 @@ void Bullet::step(double dtime){
 	/* Now update the bullet's time alive based on the time interval that's being passed in.
 	If it's too old, destroy it. Otherwise, move it, keeping gravity in mind. */
 	m_time += dtime;
-	if ( m_time > S_TTL_DEFAULT )
+	if ( m_time > m_ttl )
 		delete this; //~Bullet() will be called to clean up
 		
 	m_center.x += m_xdelta;//-

@@ -23,7 +23,7 @@ Mesh::Mesh(GLuint vao, int num_vertices, GLenum draw_mode) :
 	m_vao(vao), m_num_vertices(num_vertices), m_draw_mode(draw_mode) {}
 
 void Mesh::draw() {
-	draw(identity(), vec4(1,1,1,1), false);
+	draw(Angel::identity(), vec4(1,1,1,1), false);
 }
 
 void Mesh::draw(const mat4& wMo, const vec4& l_color, bool white_out) {

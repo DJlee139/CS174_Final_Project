@@ -4,7 +4,6 @@
 
 #include "Camera.h"
 #include "Light.h"
-#include "Timer.h"
 #include "MeshMakers.h"
 #include "Mesh.h"
 #include "Cube.h"
@@ -24,16 +23,13 @@ const int GOURARD = 1;
 const int PHONG = 2;
 const int FLAT_SHADING = 3;
 int g_draw_type = DRAW_PHONG;
-double TIME;
-double TIME_LAST;
-double DTIME;
+const double DTIME = 0.0061;
 double g_rotation;
 
 // Global objects -----------------------------------------------------------------------------------
 World g_timmy;
-Camera g_pentax;
+Camera g_pentax(70, g_window_width/g_window_height , 0.1, 800);
 Light g_lumia;
-Timer g_timer ;
 Mesh* gp_cube_mesh, *gp_sphere_mesh, *gp_wall_mesh, *gp_circle_mesh;
 
 void initGeometry() {
@@ -47,8 +43,6 @@ void initGeometry() {
 }
 
 void initScene(){
-    g_pentax.init(70, g_window_width/g_window_height , 0.1, 800); //znear, zfar
-    //g_pentax.setZoom(g_pentax.getZoom() * 0.25);
     g_rotation = 0;  //Don't use this right now, but it'll be real handy once we have things rotating.
     
     g_lumia.setColor(vec4(1,1,1,1));
@@ -57,9 +51,6 @@ void initScene(){
     //Set up the global drawer. BUT FIRST! We have to link the shaderz because otherwise
     //none of the InitDraws will work.
     g_timmy.linkProgram();
-
-    TIME_LAST = g_timer.getElapsedTime() ;
-	DTIME = 0.0;
 	
 	initGeometry();
 	
@@ -167,13 +158,7 @@ void reshapeCallback(int w, int h){
 }
 
 void idleCallback(){
-	TIME = g_timer.getElapsedTime() ;
-    
-	DTIME = TIME - TIME_LAST;
-	TIME_LAST = TIME;
-
-    g_rotation += DTIME*100;
-
+	//g_rotation += DTIME*100;
 	glutPostRedisplay(); //draw new frame
 }
 

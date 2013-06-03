@@ -51,7 +51,9 @@ void World::add(Circle* c) {
 
 void World::removeBullet(Bullet* b) {
 	//This janky line just removes all Bullet pointers equal to b from m_bullets
-	m_bullets.erase(remove(m_bullets.begin(), m_bullets.end(), b), m_bullets.end());
+	for ( size_t i = 0; i < m_bullets.size(); i++ )
+		if ( m_bullets[i] == b )
+			m_bullets.erase(m_bullets.begin() + i );
 }
 
 void World::drawAll() {

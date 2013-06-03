@@ -27,8 +27,7 @@ private:
 	double m_yaw, m_tilt;
 	double m_velocity;
 	double m_time;
-	static const double S_VELOCITY = 0.3;
-	static const double S_TTL_DEFAULT = 10;
+	double m_ttl;
 
 };
 

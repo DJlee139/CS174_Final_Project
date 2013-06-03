@@ -5,13 +5,13 @@ using namespace Angel;
 
 Thing::Thing(Mesh* m) : m_mesh(m), m_draw_whiteout(false) {
 	//To build a thing, start by setting its transformation matrix to identity.
-	m_transformation = identity();
+	m_transformation = Angel::identity();
 	m_color = vec4(1,1,1,1); //Default color is white.
 }
 
 Thing::Thing(Mesh* m, const vec4& center, const vec3& t_scale) :
 m_mesh(m), m_center(center), m_scale(t_scale), m_draw_whiteout(false) {
-	m_transformation = identity();
+	m_transformation = Angel::identity();
 	m_color = vec4(1,1,1,1);
 	translate(m_center.first3());	
 	scale(m_scale);
@@ -55,7 +55,7 @@ void Thing::scale(const double a_scale){
 }
 	
 void Thing::setIdentity(){
-	m_transformation = identity();
+	m_transformation = Angel::identity();
 }
 
 void Thing::pushMatrix(){

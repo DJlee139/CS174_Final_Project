@@ -11,7 +11,7 @@
 
 class Camera {
 public:
-	Camera();
+	Camera(double, double, double, double);
 	//Getter and setter functions
 	void setPosition(vec4& p) { m_position = p; }
 	void setAspect(const double a) { m_aspect = a; }
@@ -27,7 +27,6 @@ public:
 	double getTilt(){ return m_tilt;}
 	double getYaw(){ return m_yaw;}
 
-	void init(double, double, double, double);
 	void update(double);//update the m_cMw;
 	//My new functions for moving the camera
 	void resetView();

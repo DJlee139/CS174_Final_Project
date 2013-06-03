@@ -130,8 +130,7 @@ void sendVerticesAndNormals(vec4* vertices, const int size_v, vec3* normals, con
 }
 
 Mesh* makeSphereMesh(const int complexity) {
-    // Initialize the data arrays on CPU. Make them all the same size cus it's simpler.
-    int num_vert = 3*pow(4, 5 - complexity + 1);
+    int num_vert = 4096; //3*pow(4, 5 - complexity + 1);
    vec4 vertices[num_vert]; //For complexity = 1, need 4*4*3 = 48 vectors.
 	vec3 normals[num_vert];
    

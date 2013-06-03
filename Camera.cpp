@@ -2,16 +2,9 @@
 #include "Angel.h"
 using namespace Angel;
 
-Camera::Camera() {
+Camera::Camera(double fovy, double aspect, double znear, double zfar) :
+m_fovy(fovy), m_aspect(aspect), m_znear(znear), m_zfar(zfar), m_zoom(1) {
 	resetView();
-}
-
-void Camera::init(double fovy, double aspect, double near, double far) {
-    m_fovy = fovy;
-    m_aspect = aspect;
-    m_znear = near;
-    m_zfar = far;
-	m_zoom = 1.00; //This is cool; maybe make use of it?
 }
 
 void Camera::update(double dt) {
