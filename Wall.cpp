@@ -19,7 +19,7 @@ Thing(gp_wall_mesh, center, vec3(x_scale, y_scale, 1)) {
 	setWallBoundary();
 	//Tell Thing that when it draws a wall it should have whiteout; that is 100% ambient light so it's
 	//invisible until hit with paint
-	m_draw_whiteout = true;
+	m_draw_whiteout = false;
 }
 
 void Wall::setWallBoundary(){
