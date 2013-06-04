@@ -12,7 +12,7 @@ const double GRAVITY = 0.1;
 
 Bullet::	~Bullet() {
 	g_timmy.removeBullet(this);
-	std::cout << "Destroying Bullet " << this << std::endl;
+	//std::cout << "Destroying Bullet " << this << std::endl;
 }
 
 Bullet::Bullet(vec4 coord, double tilt, double yaw) :
@@ -38,7 +38,7 @@ void Bullet::step(double dtime){
 		delete this; //~Bullet() will be called to clean up
 		
 	m_center.x += m_xdelta;//-
-	m_center.y -= m_ydelta + m_time*GRAVITY;//+
+	m_center.y -= m_ydelta + m_time*2*GRAVITY;//+
 	m_center.z -= m_zdelta;//+
 	translate(m_center.first3());//use the method from grandparent class to change the matrix
 }

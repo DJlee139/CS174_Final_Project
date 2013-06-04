@@ -56,6 +56,11 @@ void World::removeBullet(Bullet* b) {
 			m_bullets.erase(m_bullets.begin() + i );
 }
 
+
+void World::removeCircles(){
+	//m_circles.erase(m_circles.begin(), m_circles.begin() + m_circles.size() );
+	m_circles.clear();
+}
 void World::drawAll() {
 	for ( int i = 0; i < m_bullets.size(); i++ )
 		m_bullets[i]->draw();

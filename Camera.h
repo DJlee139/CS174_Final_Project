@@ -4,7 +4,7 @@
 #ifndef CAMERA_HEADER
 #define CAMERA_HEADER
 #include "Angel.h"
-
+#include "World.h"
 //this class defines the camera's position, lookat point, rotation, etc
 //it also defines the kind of projection the camera is using: orthographics or perspective
 //currently, only perspective 
@@ -40,6 +40,7 @@ public:
 	void rotateRight();
 	void tiltDown();
 	void tiltUp();
+	void checkCollision(vec4 ccoord);
 private:
 		Angel::mat4 m_cMw; //The projection matrix, if we want to call it that.
 	    Angel::vec4 m_position;
@@ -48,7 +49,7 @@ private:
 	    //My variables for camera movement:
 		static const int S_XTRANS_DEFAULT = 0;
 		static const int S_YTRANS_DEFAULT = 0; //-20;
-		static const int S_ZTRANS_DEFAULT = -280; //-70
+		static const int S_ZTRANS_DEFAULT = -320; //-70
 		static const int S_TILT_DEFAULT = 0;
 		static const int S_YAW_DEFAULT = 0;
 		static const int S_CAMERA_INC_DEFAULT = 1; //amount to move on key press

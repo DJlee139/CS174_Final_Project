@@ -33,6 +33,8 @@ class World {
 		GLuint getShaderz() { return m_program; }
 		std::vector<Bullet*>* getBulletList() { return &m_bullets; }
 		std::vector<Wall*>* getWallList() { return &m_walls; }
+		void removeCircles();
+		//std::vector<Circle*>* getCircleList(){ return &m_circles; }
 	private:
 		Mesh* mp_axes_mesh;
 		GLuint m_program;
